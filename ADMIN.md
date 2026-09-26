@@ -12,8 +12,8 @@ The website is plain HTML/CSS/JS. All its text, images, links, colours and lists
 ## 2. Turn on storage (one time)
 
 1. In your Vercel project → **Storage** tab → **Create Database** → **Blob** → create it.
-2. Connect it to this project and tick **all environments** (Production, Preview, Development). Vercel adds `BLOB_READ_WRITE_TOKEN` automatically.
-   Public or private store both work.
+2. Connect it to this project (Production and Preview). Vercel adds `BLOB_STORE_ID` (or `BLOB_READ_WRITE_TOKEN` on older setups) automatically.
+   Public or private store both work. Connect it only once; if Vercel says the project "already uses BLOB_STORE_ID", it's already connected.
 3. **Redeploy** (Deployments → latest → ⋯ → Redeploy). The token only reaches the site after a new deployment.
 
 ## 3. Set the admin password (one time)
@@ -69,7 +69,8 @@ The admin checks storage when you log in and shows a yellow banner if publishing
 
 | Message | Fix |
 | --- | --- |
-| *BLOB_READ_WRITE_TOKEN is missing* | Storage → your Blob store → **Connect Project** → tick all environments → then **Redeploy**. |
+| *Vercel Blob isn't connected* | Storage → your Blob store → **Connect Project** → then **Redeploy**. |
+| *couldn't sign in to it* | Settings → Security → turn on **OIDC federation**, then **Redeploy**. Or reconnect the store with **Add a read-write token env var** ticked. |
 | *The Blob store … no longer exists* / *rejected the token* | The store was deleted or reconnected. Reconnect it to the project, then **Redeploy**. |
 | *Blob store is suspended* | You've hit the free-plan limit. Check Vercel → Storage for usage. |
 | *ADMIN_PASSWORD isn't set* | Settings → Environment Variables → add `ADMIN_PASSWORD` → **Redeploy**. |

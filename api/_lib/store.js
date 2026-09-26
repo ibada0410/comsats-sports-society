@@ -4,7 +4,8 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
-const useBlob = !!process.env.BLOB_READ_WRITE_TOKEN;
+// newer Vercel connections set BLOB_STORE_ID (+ an automatic OIDC token); older ones set BLOB_READ_WRITE_TOKEN
+const useBlob = !!(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
 const onVercel = !!process.env.VERCEL;
 const LOCAL = path.join(process.cwd(), ".data");
 const KEEP_VERSIONS = 40;
@@ -14,7 +15,7 @@ export class StorageError extends Error {}
 let blob = null;
 async function sdk() {
   if (!useBlob && onVercel) {
-    throw new StorageError("Vercel Blob isn't connected: BLOB_READ_WRITE_TOKEN is missing. In Vercel open Storage → your Blob store → Connect Project, tick all environments, then redeploy.");
+    throw new StorageError("Vercel Blob isn't connected to this project (no BLOB_STORE_ID or BLOB_READ_WRITE_TOKEN). In Vercel open Storage → your Blob store → Connect Project, then redeploy.");
   }
   blob ??= await import("@vercel/blob");
   return blob;
@@ -168,6 +169,7 @@ export async function storageStatus() {
 export function describe(err) {
   if (err instanceof StorageError) return err.message;
   const m = String(err?.message || err);
+  if (/no blob credentials/i.test(m)) return "Vercel Blob is connected but the site couldn't sign in to it. In Vercel → Settings → Security, make sure “Secure backend access with OIDC federation” is on, then redeploy. Or reconnect the store with “Add a read-write token env var” ticked.";
   if (/access denied|valid token/i.test(m)) return "Vercel Blob rejected the token. Reconnect the Blob store to this project (Storage tab) and redeploy.";
   if (/store.*(not.*found|does not exist)|BlobStoreNotFound/i.test(m)) return "The Blob store connected to this project no longer exists. Create or reconnect one in the Storage tab and redeploy.";
   if (/suspended/i.test(m)) return "The Blob store is suspended (usually the free-plan limit). Check Vercel → Storage.";
