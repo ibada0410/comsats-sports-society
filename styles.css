@@ -790,3 +790,31 @@ html { font-synthesis: none; }
 @media (max-width: 640px) { .squad-grid { gap: 20px 14px; } .squad-grid > .player { width: calc((100% - 14px) / 2); } }
 .shirt.has-photo img { object-position: center 18%; }
 .photo-num:empty { display: none; }
+
+/* ---------- promo popup ---------- */
+.promo {
+  position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 20px;
+  background: rgba(6, 12, 20, 0); transition: background-color .3s;
+}
+.promo.is-open { background: rgba(6, 12, 20, .78); }
+.promo-card {
+  position: relative; width: min(620px, 100%); max-height: calc(100vh - 40px);
+  opacity: 0; transform: translateY(30px) scale(.94) rotate(-1.5deg);
+  transition: opacity .35s var(--ease), transform .5s cubic-bezier(.2, 1.3, .4, 1);
+}
+.promo.is-open .promo-card { opacity: 1; transform: none; }
+.promo-link { display: block; box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .7); }
+.promo-link:focus-visible { outline-offset: 4px; }
+.promo-img { display: block; width: 100%; height: auto; max-height: calc(100vh - 40px); object-fit: contain; transition: transform .3s var(--ease); }
+.promo-link:hover .promo-img { transform: scale(1.015); }
+.promo-close {
+  position: absolute; top: -14px; right: -14px; z-index: 1; width: 44px; height: 44px; border-radius: 50%;
+  display: grid; place-items: center; background: #fff; color: var(--ink); font-size: 18px; font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .4); transition: background-color .2s, color .2s, transform .2s;
+}
+.promo-close:hover { background: var(--signal); color: #fff; transform: rotate(90deg); }
+@media (max-width: 640px) {
+  .promo { padding: 28px 14px; }
+  .promo-close { top: -16px; right: -6px; width: 40px; height: 40px; }
+}
+@media (prefers-reduced-motion: reduce) { .promo-card { transform: none; } }

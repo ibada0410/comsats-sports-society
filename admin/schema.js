@@ -107,6 +107,24 @@ const SCHEMA = [
     }],
   },
   {
+    group: "General", id: "popup", title: "Popup", page: "index.html", anchor: "#top", previewExtra: "&popup=1",
+    intro: "An image that pops up over the site, e.g. a recruitment poster. Visitors close it with the ✕; clicking the image opens the link.",
+    fields: [
+      { key: "popup.enabled", label: "Show the popup", type: "toggle" },
+      { key: "popup.image", label: "Popup image", type: "image", help: "Any size works; it's scaled to fit the screen. Uploading a new image shows it again to everyone who closed the old one." },
+      { key: "popup.link", label: "Clicking the image goes to", type: "url", help: "recruitment.html#applyForm opens the application form." },
+      { key: "popup.alt", label: "Image description", type: "text", help: "Read out by screen readers, e.g. “Recruitment is open. Click to register.”" },
+      { key: "popup.delay", label: "Appears after (seconds)", type: "number", min: 0, max: 30, half: true },
+      { key: "popup.frequency", label: "After someone closes it", type: "select", half: true, options: [
+        ["page", "Show again on every page"], ["session", "Show again next visit"], ["day", "Show again after a day"], ["once", "Never show again"],
+      ] },
+      { key: "popup.showOnHome", label: "Show on the home page", type: "toggle" },
+      { key: "popup.showOnClubs", label: "Show on the clubs page", type: "toggle" },
+      { key: "popup.showOnRecruitment", label: "Show on the recruitment page", type: "toggle" },
+      { key: "popup.closeLabel", label: "Close button name", type: "text", help: "Read out by screen readers." },
+    ],
+  },
+  {
     group: "General", id: "loader", title: "Loading screen", page: "index.html", anchor: "#top",
     intro: "The “On your marks, get set, go” intro that plays when someone opens the site.",
     fields: [

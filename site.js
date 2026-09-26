@@ -272,6 +272,104 @@ function renderChrome(C) {
   }
 }
 
+/* ---------- Promo popup (e.g. recruitment poster), set in Admin → Popup ---------- */
+const POPUP_SEEN = "css-popup-seen";
+let popupEl = null, popupTimer = null, popupShown = false;
+
+function popupAllowed(P) {
+  const page = root.dataset.page;
+  const onPage = { home: P.showOnHome, clubs: P.showOnClubs, recruitment: P.showOnRecruitment }[page];
+  if (!P.enabled || !P.image || onPage === false) return false;
+  if (Content.isPreview) return new URLSearchParams(location.search).has("popup");
+  // someone who clicked the poster is already on their way to the form: don't cover it again this visit
+  if (sessionStorage.getItem("css-popup-clicked") === P.image) return false;
+  const seen = (() => { try { return JSON.parse(localStorage.getItem(POPUP_SEEN) || "null"); } catch (e) { return null; } })();
+  // only suppress if the same poster was closed before (a new poster always shows)
+  if (!seen || seen.image !== P.image) return true;
+  if (P.frequency === "session") return sessionStorage.getItem(POPUP_SEEN) !== P.image;
+  if (P.frequency === "day") return Date.now() - seen.at > 864e5;
+  if (P.frequency === "once") return false;
+  return true; // "page": every page load
+}
+
+function closePopup() {
+  if (!popupEl || popupEl.hidden) return;
+  const P = window.SITE?.popup || {};
+  try {
+    localStorage.setItem(POPUP_SEEN, JSON.stringify({ image: P.image, at: Date.now() }));
+    sessionStorage.setItem(POPUP_SEEN, P.image);
+  } catch (e) {}
+  popupEl.classList.remove("is-open");
+  setTimeout(() => { popupEl.hidden = true; }, 300);
+  document.removeEventListener("keydown", popupKeys);
+  popupEl.returnFocus?.focus?.();
+}
+
+function popupKeys(e) {
+  if (e.key === "Escape") closePopup();
+  if (e.key === "Tab") {
+    // keep keyboard focus inside the popup
+    const items = $$("a, button", popupEl);
+    const first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+}
+
+function renderPopup(C) {
+  const P = C.popup || {};
+  if (!popupEl) {
+    popupEl = h(`<div class="promo" hidden>
+        <div class="promo-card" role="dialog" aria-modal="true">
+          <button type="button" class="promo-close"><span aria-hidden="true">✕</span></button>
+          <a class="promo-link"><img class="promo-img" alt="" /></a>
+        </div>
+      </div>`);
+    document.body.append(popupEl);
+    $(".promo-close", popupEl).addEventListener("click", closePopup);
+    popupEl.addEventListener("click", (e) => e.target === popupEl && closePopup());
+    // clicking the poster counts as "seen" too
+    $(".promo-link", popupEl).addEventListener("click", () => {
+      const img = window.SITE?.popup?.image;
+      try {
+        localStorage.setItem(POPUP_SEEN, JSON.stringify({ image: img, at: Date.now() }));
+        sessionStorage.setItem(POPUP_SEEN, img);
+        sessionStorage.setItem("css-popup-clicked", img);
+      } catch (e) {}
+    });
+  }
+  const link = $(".promo-link", popupEl);
+  link.href = Content.safeUrl(P.link || "recruitment.html");
+  if (/^https?:/i.test(P.link || "")) { link.target = "_blank"; link.rel = "noopener"; } else { link.removeAttribute("target"); }
+  $(".promo-img", popupEl).src = Content.safeUrl(P.image || "");
+  $(".promo-img", popupEl).alt = P.alt || "";
+  $(".promo-card", popupEl).setAttribute("aria-label", P.alt || "Announcement");
+  $(".promo-close", popupEl).setAttribute("aria-label", P.closeLabel || "Close");
+
+  if (!popupAllowed(P)) {
+    clearTimeout(popupTimer);
+    if (!popupEl.hidden) { popupEl.classList.remove("is-open"); popupEl.hidden = true; }
+    return;
+  }
+  if (popupShown && !Content.isPreview) return;
+
+  const open = () => {
+    // wait for the intro loader to finish first
+    if (root.classList.contains("intro")) { popupTimer = setTimeout(open, 300); return; }
+    popupShown = true;
+    popupEl.returnFocus = document.activeElement;
+    popupEl.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => popupEl.classList.add("is-open")));
+    $(".promo-close", popupEl).focus({ preventScroll: true });
+    document.addEventListener("keydown", popupKeys);
+  };
+  clearTimeout(popupTimer);
+  if (!popupEl.hidden) return;
+  popupTimer = setTimeout(open, Content.isPreview ? 200 : Math.max(0, parseFloat(P.delay) || 0) * 1000);
+}
+
+const h = (html) => { const t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstElementChild; };
+
 /* ---------- Reveal on scroll (safe to call again after a re-render) ---------- */
 let revealIO = null;
 function setupReveal() {
@@ -301,6 +399,7 @@ function initSite() {
   setupWipe();
   setupNav();
   Content.onReady(renderChrome);
+  Content.onReady(renderPopup);
   const y = $("#year");
   if (y) y.textContent = new Date().getFullYear();
 }

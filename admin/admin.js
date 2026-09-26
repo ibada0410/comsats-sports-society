@@ -294,7 +294,7 @@
       ed.append(box);
     }
     ed.scrollTop = 0;
-    if (sec.page) showPreviewPage(sec.page, sec.anchor);
+    if (sec.page) showPreviewPage(sec.page, sec.anchor, sec.previewExtra || "");
     updateStatus();
   }
 
@@ -701,11 +701,12 @@
     $("#previewPage").textContent = `Preview · ${PAGE_NAMES[page] || page}`;
     $("#previewOpen").href = siteUrl(page);
     localStorage.setItem(DRAFT_KEY, JSON.stringify(state.draft));
-    if (state.previewPage === page && !extra) {
+    const key = page + extra;
+    if (state.previewPage === key) {
       scrollPreview(anchor);
       return;
     }
-    state.previewPage = page;
+    state.previewPage = key;
     state.pendingAnchor = anchor;
     frame.src = siteUrl(`${page}?preview=1${extra}`);
   }

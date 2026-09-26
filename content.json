@@ -623,5 +623,17 @@
     "skip": "Skip to content",
     "menu": "Menu",
     "closePhoto": "Close ✕"
+  },
+  "popup": {
+    "enabled": true,
+    "image": "assets/popup/recruitment-fa26.webp",
+    "alt": "Recruitment is open, FA26. Click here to register.",
+    "link": "recruitment.html#applyForm",
+    "delay": 1.5,
+    "frequency": "page",
+    "showOnHome": true,
+    "showOnClubs": true,
+    "showOnRecruitment": true,
+    "closeLabel": "Close"
   }
 }
