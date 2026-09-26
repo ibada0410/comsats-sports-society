@@ -275,14 +275,31 @@ function renderChrome(C) {
 /* ---------- Promo popup (e.g. recruitment poster), set in Admin → Popup ---------- */
 const POPUP_SEEN = "css-popup-seen";
 let popupEl = null, popupTimer = null, popupShown = false;
+// set when the visitor clicked the poster on the previous page; used once, then cleared
+const popupArrivedFromClick = (() => {
+  try {
+    const v = sessionStorage.getItem("css-popup-arrive") === "1";
+    sessionStorage.removeItem("css-popup-arrive");
+    sessionStorage.removeItem("css-popup-clicked"); // old flag from earlier versions
+    return v;
+  } catch (e) { return false; }
+})();
+
+// pages restored by the Back/Forward buttons don't reload, so show the popup again on those too
+window.addEventListener("pageshow", (e) => {
+  if (!e.persisted || !window.SITE) return;
+  popupShown = false;
+  if (popupEl) { popupEl.classList.remove("is-open"); popupEl.hidden = true; }
+  renderPopup(window.SITE);
+});
 
 function popupAllowed(P) {
   const page = root.dataset.page;
   const onPage = { home: P.showOnHome, clubs: P.showOnClubs, recruitment: P.showOnRecruitment }[page];
   if (!P.enabled || !P.image || onPage === false) return false;
   if (Content.isPreview) return new URLSearchParams(location.search).has("popup");
-  // someone who clicked the poster is already on their way to the form: don't cover it again this visit
-  if (sessionStorage.getItem("css-popup-clicked") === P.image) return false;
+  // skip it once: on the page the visitor just opened by clicking the poster (the form)
+  if (popupArrivedFromClick) return false;
   const seen = (() => { try { return JSON.parse(localStorage.getItem(POPUP_SEEN) || "null"); } catch (e) { return null; } })();
   // only suppress if the same poster was closed before (a new poster always shows)
   if (!seen || seen.image !== P.image) return true;
@@ -334,7 +351,7 @@ function renderPopup(C) {
       try {
         localStorage.setItem(POPUP_SEEN, JSON.stringify({ image: img, at: Date.now() }));
         sessionStorage.setItem(POPUP_SEEN, img);
-        sessionStorage.setItem("css-popup-clicked", img);
+        sessionStorage.setItem("css-popup-arrive", "1");
       } catch (e) {}
     });
   }
