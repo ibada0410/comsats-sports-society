@@ -818,3 +818,7 @@ html { font-synthesis: none; }
   .promo-close { top: -16px; right: -6px; width: 40px; height: 40px; }
 }
 @media (prefers-reduced-motion: reduce) { .promo-card { transform: none; } }
+
+/* the giant footer word is decoration only: never block the links above it */
+.footer-mark { pointer-events: none; }
+.footer-legal { position: relative; z-index: 1; }
