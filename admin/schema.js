@@ -282,7 +282,7 @@ const SCHEMA = [
           { key: "photo", label: "Photo (optional)", type: "image" },
         ],
       },
-      { key: "home.council.topRow", label: "Members in top row", type: "number", min: 0, max: 12, help: "The first members in the list sit on their own centred row (e.g. 3 on top, 5 below). Use 0 for even rows." },
+      { key: "home.council.rows", label: "Row layout", type: "text", help: "How many members on each row, top to bottom, e.g. 3, 5, 2. Members fill the rows in list order. Leave empty for even rows." },
       { key: "home.council.kicker", label: "Small label", type: "text" },
       { key: "home.council.title", label: "Heading", type: "text" },
       { key: "home.council.text", label: "Paragraph", type: "textarea" },

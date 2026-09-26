@@ -72,6 +72,9 @@ function getSheet() {
     sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight("bold");
     sheet.setFrozenRows(1);
   }
+  // keep phone and registration numbers as text so Sheets doesn't drop the leading 0
+  sheet.getRange("C:C").setNumberFormat("@");
+  sheet.getRange("E:E").setNumberFormat("@");
   return sheet;
 }
 

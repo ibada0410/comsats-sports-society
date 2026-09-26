@@ -260,6 +260,7 @@
       "kicker": "Council SP26",
       "title": "The squad behind the games.",
       "text": "The students who plan, book, referee and run every event.",
+      "rows": "3, 5, 2",
       "members": [
         {
           "name": "Wasi Mohammad",
@@ -316,9 +317,22 @@
           "number": "",
           "role": "Girls Mentor",
           "photo": "assets/council/08-hoor-e-ain.jpg"
+        },
+        {
+          "name": "Member Name",
+          "shirt": "SURNAME",
+          "number": "",
+          "role": "Role",
+          "photo": ""
+        },
+        {
+          "name": "Member Name",
+          "shirt": "SURNAME",
+          "number": "",
+          "role": "Role",
+          "photo": ""
         }
-      ],
-      "topRow": 3
+      ]
     },
     "clubsTeaser": {
       "kicker": "Clubs",

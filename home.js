@@ -184,11 +184,14 @@ function renderFixtures(C) {
 
 /* ---------- Council ---------- */
 function renderSquad(C) {
-  // "Members in top row" puts the first N members on their own centred row (e.g. 3 on top, 5 below)
-  const top = parseInt(C.home.council.topRow, 10) || 0;
-  const members = C.home.council.members;
+  // "Row layout" like "3, 5, 2" puts members on centred rows of those sizes, in list order
+  const council = C.home.council;
+  const pattern = String(council.rows ?? council.topRow ?? "").split(/[^0-9]+/).map(Number).filter((n) => n > 0);
+  const breaks = new Set();
+  pattern.reduce((sum, n) => { breaks.add(sum + n); return sum + n; }, 0);
+  const members = council.members;
   $("#squadGrid").innerHTML = members.map(
-    (m, i) => `${i === top && top > 0 && top < members.length ? '<li class="squad-break" aria-hidden="true"></li>' : ""}
+    (m, i) => `${i > 0 && breaks.has(i) ? '<li class="squad-break" aria-hidden="true"></li>' : ""}
       <li class="player rv" style="--d:${(i % 4) * 0.08}s">
         <div class="shirt ${m.photo ? "has-photo" : ""}">
           ${m.photo
