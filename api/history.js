@@ -3,6 +3,7 @@
 
 import { listVersions, readVersion, describe } from "./_lib/store.js";
 import { send, requireAuth } from "./_lib/http.js";
+import { migrateText } from "./_lib/migrate.js";
 
 export default async function handler(req, res) {
   if (!requireAuth(req, res)) return;
@@ -11,7 +12,7 @@ export default async function handler(req, res) {
     const id = new URL(req.url, "http://x").searchParams.get("id");
     if (id) {
       const text = await readVersion(id);
-      return text ? send(res, 200, text) : send(res, 404, { error: "Version not found" });
+      return text ? send(res, 200, migrateText(text)) : send(res, 404, { error: "Version not found" });
     }
     const versions = await listVersions();
     return send(res, 200, { items: versions.map(({ id, savedAt, size }) => ({ id, savedAt, size })) });
