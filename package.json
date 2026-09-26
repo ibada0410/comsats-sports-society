@@ -1,0 +1,15 @@
+{
+  "name": "comsats-sports-society",
+  "private": true,
+  "type": "module",
+  "description": "COMSATS Sports Society website with admin panel",
+  "scripts": {
+    "dev": "node dev-server.mjs"
+  },
+  "dependencies": {
+    "@vercel/blob": "^1.1.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

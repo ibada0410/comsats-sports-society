@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Admin · COMSATS Sports Society</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Big+Shoulders+Display:wght@700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css?v=1" />
+</head>
+<body>
+  <!-- ========== LOGIN ========== -->
+  <main class="login" id="login" hidden>
+    <form class="login-card" id="loginForm">
+      <img src="../assets/logo.png" alt="" width="72" height="72" />
+      <p class="eyebrow">COMSATS Sports Society</p>
+      <h1>Site admin</h1>
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" required />
+      <p class="login-error" id="loginError" role="alert"></p>
+      <button type="submit" class="btn btn-sky" id="loginBtn">Log in</button>
+      <a class="login-back" href="../index.html">← Back to the website</a>
+    </form>
+  </main>
+
+  <!-- ========== APP ========== -->
+  <div class="app" id="app" hidden>
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Sections" aria-expanded="false">☰</button>
+      <a class="brand" href="../index.html" target="_blank" rel="noopener" title="Open the website">
+        <img src="../assets/logo.png" alt="" width="34" height="34" id="brandLogo" />
+        <span><b>Site admin</b><small>COMSATS Sports Society</small></span>
+      </a>
+      <div class="status" id="status" aria-live="polite"><span class="status-dot"></span><span id="statusText">All changes published</span></div>
+      <div class="top-actions">
+        <button class="btn btn-ghost" id="discardBtn" hidden>Discard changes</button>
+        <button class="btn btn-ghost preview-toggle" id="previewToggle" aria-pressed="true">Preview</button>
+        <button class="btn btn-sky" id="publishBtn" disabled>Publish</button>
+        <button class="icon-btn" id="logoutBtn" title="Log out" aria-label="Log out">⎋</button>
+      </div>
+    </header>
+
+    <div class="banner" id="banner" hidden></div>
+
+    <div class="layout" id="layout">
+      <nav class="sidebar" id="sidebar" aria-label="Sections"></nav>
+
+      <section class="editor" id="editor" aria-live="polite"></section>
+
+      <aside class="preview" id="preview">
+        <div class="preview-bar">
+          <span class="preview-page" id="previewPage">Home</span>
+          <div class="seg" role="group" aria-label="Preview size">
+            <button data-device="desktop" class="is-active">Desktop</button>
+            <button data-device="mobile">Mobile</button>
+          </div>
+          <a class="icon-btn" id="previewOpen" href="../index.html" target="_blank" rel="noopener" title="Open the live site">↗</a>
+        </div>
+        <div class="preview-stage" id="previewStage">
+          <iframe id="previewFrame" title="Live preview" src="about:blank"></iframe>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Media picker -->
+  <div class="modal" id="mediaModal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="mediaTitle">
+      <header class="modal-head">
+        <h2 id="mediaTitle">Choose an image</h2>
+        <label class="btn btn-sky btn-sm">Upload new<input type="file" accept="image/*" id="modalUpload" hidden /></label>
+        <button class="icon-btn" id="mediaClose" aria-label="Close">✕</button>
+      </header>
+      <div class="media-grid" id="modalGrid"></div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="schema.js?v=1"></script>
+  <script src="admin.js?v=1"></script>
+</body>
+</html>

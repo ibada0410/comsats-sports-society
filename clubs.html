@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-page="clubs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clubs · COMSATS Sports Society</title>
+  <meta name="description" content="Media, Graphics, Operations, Events and Decor: the five clubs of COMSATS Sports Society, CUI Wah." />
+  <meta property="og:title" content="Clubs · COMSATS Sports Society" />
+  <meta property="og:description" content="Media, Graphics, Operations, Events and Decor: the five clubs of COMSATS Sports Society, CUI Wah." />
+  <meta property="og:image" content="assets/logo.png" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0A1420" />
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <script>try{var r=document.documentElement,c=JSON.parse(localStorage.getItem("css-content-cache")||"{}");if(location.search.indexOf("preview")<0||location.search.indexOf("intro=1")>-1){if(sessionStorage.getItem("css-wipe"))r.classList.add("wipe-in");else if(!(c.loader&&c.loader.enabled===false)&&!matchMedia("(prefers-reduced-motion: reduce)").matches)r.classList.add("intro")}}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Big+Shoulders+Display:wght@700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=6" />
+</head>
+<body>
+  <!-- ========== INTRO LOADER ========== -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-half loader-top"></div>
+    <div class="loader-half loader-bottom"></div>
+    <div class="loader-stage">
+      <div class="loader-head">
+        <img src="assets/logo.png" data-c-src="site.logo" alt="" width="48" height="48" />
+        <span data-c="site.name">COMSATS Sports Society</span>
+        <span class="loader-watch"><b id="loaderWatch">0.00</b> s</span>
+      </div>
+      <div class="loader-calls">
+        <span class="call c1" data-c="loader.call1">On your marks</span>
+        <span class="call c2" data-c="loader.call2">Get set</span>
+        <span class="call c3" data-c="loader.call3">Go!</span>
+      </div>
+      <div class="track">
+        <div class="lane"><i>1</i></div>
+        <div class="lane"><i>2</i></div>
+        <div class="lane lane-run"><i>3</i><span class="runner"></span></div>
+        <div class="lane"><i>4</i></div>
+        <span class="finish"></span>
+      </div>
+    </div>
+  </div>
+  <div class="wipe" id="wipe" aria-hidden="true"></div>
+
+  <a href="#main" class="skip">Skip to content</a>
+
+  <div class="topbar" data-c-show="topbar.show">
+    <div class="wrap topbar-inner">
+      <p><span class="dot" aria-hidden="true"></span><span data-c="topbar.text">Recruitment open.</span> <a href="recruitment.html" data-c-href="topbar.link" class="topbar-link" data-c="topbar.linkText">Apply online →</a></p>
+      <div class="topbar-social">
+        <a href="https://www.instagram.com/comsatssportssociety/" data-c-href="social.instagram" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/comsatssportssociety" data-c-href="social.facebook" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="index.html" class="crest" aria-label="Home">
+        <img src="assets/logo.png" data-c-src="site.logo" alt="" width="44" height="44" />
+        <span class="crest-text"><b data-c="site.crestTop">COMSATS</b> <span data-c="site.crestBottom">Sports Society</span></span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Main">
+        <a href="index.html#club" data-c="nav.society">The Society</a>
+        <a href="index.html#sports" data-c="nav.sports">Sports</a>
+        <a href="index.html#fixtures" data-c="nav.fixtures">Fixtures</a>
+        <a href="index.html#squad" data-c="nav.council">Council</a>
+        <a href="clubs.html" data-page-link="clubs" data-c="nav.clubs">Clubs</a>
+        <a href="recruitment.html" class="btn btn-ink nav-cta" data-page-link="recruitment" data-c="nav.cta">Join us</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span>
+      </button>
+    </div>
+    <span class="progress" id="progress" aria-hidden="true"></span>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="wrap">
+        <p class="kicker hero-kicker"><span data-c="clubsPage.kicker">Clubs</span><span class="sep" aria-hidden="true">/</span><span data-c="site.name">COMSATS Sports Society</span></p>
+        <h1 class="page-title"><span class="line"><span data-c="clubsPage.line1">Five clubs.</span></span><span class="line line-accent"><span data-c="clubsPage.line2">One matchday.</span></span></h1>
+        <div class="page-intro">
+          <p data-c="clubsPage.intro">Every tournament needs people who never step on the pitch. Cameras, posters, brackets, stages and ceremonies: our five clubs make matchday happen. Pick the one that fits you.</p>
+          <a href="recruitment.html" class="btn btn-sky"><span data-c="clubsPage.cta">Apply to a club</span> <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <nav class="club-index" aria-label="Clubs">
+      <div class="wrap">
+        <ul class="board board-compact" id="clubIndex"></ul>
+      </div>
+    </nav>
+
+    <div id="clubPanels"></div>
+
+    <section class="join">
+      <div class="wrap join-grid">
+        <h2 class="join-title" data-c="clubsPage.joinTitle">Find your<br />position.</h2>
+        <div class="join-body">
+          <p data-c="clubsPage.joinText">Choose a preferred club and a second choice on the form. We&#x27;ll contact you about the interview.</p>
+          <div class="join-actions">
+            <a href="recruitment.html" class="btn btn-ink"><span data-c="clubsPage.joinCta">Apply now</span> <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div class="footer-crest">
+          <img src="assets/logo.png" data-c-src="site.logo" alt="" width="64" height="64" />
+          <p><b data-c="site.name">COMSATS Sports Society</b><br /><span data-c="site.university">COMSATS University Islamabad</span>, <span data-c="site.campus">Wah Campus</span><br /><span data-c="site.address">G.T. Road, Wah Cantt</span></p>
+        </div>
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="index.html#club" data-c="nav.society">The Society</a>
+          <a href="index.html#sports" data-c="nav.sports">Sports</a>
+          <a href="index.html#fixtures" data-c="nav.fixtures">Fixtures</a>
+          <a href="clubs.html" data-c="nav.clubs">Clubs</a>
+          <a href="recruitment.html" data-c="nav.recruitment">Recruitment</a>
+        </nav>
+        <div class="footer-nav">
+          <a href="https://www.instagram.com/comsatssportssociety/" data-c-href="social.instagram" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/comsatssportssociety" data-c-href="social.facebook" target="_blank" rel="noopener">Facebook</a>
+        </div>
+      </div>
+      <p class="footer-legal">© <span id="year"></span> <span data-c="site.copyright">COMSATS Sports Society. One team, one dream.</span></p>
+    </div>
+    <p class="footer-mark" aria-hidden="true" data-c="site.footerMark">Sports Society</p>
+  </footer>
+
+  <script src="content.js?v=6"></script>
+  <script src="site.js?v=6"></script>
+  <script src="clubs.js?v=6"></script>
+</body>
+</html>

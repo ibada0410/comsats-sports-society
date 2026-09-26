@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" data-page="recruitment">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recruitment · COMSATS Sports Society</title>
+  <meta name="description" content="Apply to join COMSATS Sports Society, CUI Wah. Pick your club and submit the application form." />
+  <meta property="og:title" content="Recruitment · COMSATS Sports Society" />
+  <meta property="og:description" content="Apply to join COMSATS Sports Society, CUI Wah. Pick your club and submit the application form." />
+  <meta property="og:image" content="assets/logo.png" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0A1420" />
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <script>try{var r=document.documentElement,c=JSON.parse(localStorage.getItem("css-content-cache")||"{}");if(location.search.indexOf("preview")<0||location.search.indexOf("intro=1")>-1){if(sessionStorage.getItem("css-wipe"))r.classList.add("wipe-in");else if(!(c.loader&&c.loader.enabled===false)&&!matchMedia("(prefers-reduced-motion: reduce)").matches)r.classList.add("intro")}}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Big+Shoulders+Display:wght@700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=6" />
+</head>
+<body>
+  <!-- ========== INTRO LOADER ========== -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-half loader-top"></div>
+    <div class="loader-half loader-bottom"></div>
+    <div class="loader-stage">
+      <div class="loader-head">
+        <img src="assets/logo.png" data-c-src="site.logo" alt="" width="48" height="48" />
+        <span data-c="site.name">COMSATS Sports Society</span>
+        <span class="loader-watch"><b id="loaderWatch">0.00</b> s</span>
+      </div>
+      <div class="loader-calls">
+        <span class="call c1" data-c="loader.call1">On your marks</span>
+        <span class="call c2" data-c="loader.call2">Get set</span>
+        <span class="call c3" data-c="loader.call3">Go!</span>
+      </div>
+      <div class="track">
+        <div class="lane"><i>1</i></div>
+        <div class="lane"><i>2</i></div>
+        <div class="lane lane-run"><i>3</i><span class="runner"></span></div>
+        <div class="lane"><i>4</i></div>
+        <span class="finish"></span>
+      </div>
+    </div>
+  </div>
+  <div class="wipe" id="wipe" aria-hidden="true"></div>
+
+  <a href="#main" class="skip">Skip to content</a>
+
+  <div class="topbar" data-c-show="topbar.show">
+    <div class="wrap topbar-inner">
+      <p><span class="dot" aria-hidden="true"></span><span data-c="topbar.text">Recruitment open.</span> <a href="recruitment.html" data-c-href="topbar.link" class="topbar-link" data-c="topbar.linkText">Apply online →</a></p>
+      <div class="topbar-social">
+        <a href="https://www.instagram.com/comsatssportssociety/" data-c-href="social.instagram" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/comsatssportssociety" data-c-href="social.facebook" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="index.html" class="crest" aria-label="Home">
+        <img src="assets/logo.png" data-c-src="site.logo" alt="" width="44" height="44" />
+        <span class="crest-text"><b data-c="site.crestTop">COMSATS</b> <span data-c="site.crestBottom">Sports Society</span></span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Main">
+        <a href="index.html#club" data-c="nav.society">The Society</a>
+        <a href="index.html#sports" data-c="nav.sports">Sports</a>
+        <a href="index.html#fixtures" data-c="nav.fixtures">Fixtures</a>
+        <a href="index.html#squad" data-c="nav.council">Council</a>
+        <a href="clubs.html" data-page-link="clubs" data-c="nav.clubs">Clubs</a>
+        <a href="recruitment.html" class="btn btn-ink nav-cta" data-page-link="recruitment" data-c="nav.cta">Join us</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span>
+      </button>
+    </div>
+    <span class="progress" id="progress" aria-hidden="true"></span>
+  </header>
+
+  <main id="main" class="recruit">
+    <div class="wrap recruit-grid">
+      <aside class="recruit-side">
+        <p class="kicker" data-c="recruitment.kicker">Recruitment</p>
+        <h1 class="page-title page-title-sm"><span class="line"><span data-c="recruitment.line1">Sign for</span></span><span class="line line-accent"><span data-c="recruitment.line2">the society.</span></span></h1>
+        <p class="recruit-lead" data-c="recruitment.lead">Applications are open for all five clubs. It takes about three minutes.</p>
+        <h2 class="side-label" data-c="recruitment.stepsTitle">What happens next</h2>
+        <ol class="steps" id="stepsList"></ol>
+        <p class="side-help"><span data-c="recruitment.help">Questions? DM us on</span> <a href="https://www.instagram.com/comsatssportssociety/" data-c-href="social.instagram" target="_blank" rel="noopener">Instagram</a> or <a href="https://www.facebook.com/comsatssportssociety" data-c-href="social.facebook" target="_blank" rel="noopener">Facebook</a>.</p>
+      </aside>
+
+      <section class="form-card" aria-labelledby="formTitle">
+        <div class="closed-card" id="closedCard" hidden>
+          <h2 class="success-title" data-c="recruitment.closedTitle">Recruitment is closed.</h2>
+          <p class="muted" data-c="recruitment.closedText">Applications are closed for now. Follow us on Instagram to hear when the next intake opens.</p>
+          <a href="https://www.instagram.com/comsatssportssociety/" data-c-href="social.instagram" target="_blank" rel="noopener" class="btn btn-ink">Follow on Instagram <span aria-hidden="true">→</span></a>
+        </div>
+
+        <form id="applyForm" novalidate>
+          <header class="form-head">
+            <h2 id="formTitle" data-c="recruitment.form.title">Application form</h2>
+            <span class="req-note" data-c="recruitment.form.requiredNote">All fields are required</span>
+          </header>
+
+          <fieldset>
+            <legend data-c="recruitment.form.sectionDetails">Your details</legend>
+            <div class="field field-full">
+              <label for="name" data-c="recruitment.form.name">Full name</label>
+              <input id="name" name="name" type="text" required aria-describedby="name-err" autocomplete="name" maxlength="80" />
+              <p class="err" id="name-err"></p>
+            </div>
+            <div class="field">
+              <label for="contact" data-c="recruitment.form.contact">Contact number</label>
+              <input id="contact" name="contact" type="tel" required aria-describedby="contact-err" inputmode="tel" autocomplete="tel" placeholder="03XX XXXXXXX" maxlength="16" />
+              <p class="err" id="contact-err"></p>
+            </div>
+            <div class="field">
+              <label for="email" data-c="recruitment.form.email">Email</label>
+              <input id="email" name="email" type="email" required aria-describedby="email-err" autocomplete="email" placeholder="you@example.com" maxlength="120" />
+              <p class="err" id="email-err"></p>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend data-c="recruitment.form.sectionAcademic">Academic</legend>
+            <div class="field field-full">
+              <label for="regNo" data-c="recruitment.form.regNo">Registration number</label>
+              <input id="regNo" name="regNo" type="text" required aria-describedby="regNo-hint regNo-err" placeholder="FA23-BCS-045" autocapitalize="characters" maxlength="20" />
+              <p class="hint" id="regNo-hint" data-c="recruitment.form.regHint">Format: FA23-BCS-045 or SP24-BSE-012</p>
+              <p class="err" id="regNo-err"></p>
+            </div>
+            <div class="field">
+              <label for="department" data-c="recruitment.form.department">Department</label>
+              <div class="select"><select id="department" name="department" required aria-describedby="department-err"><option value="">Select</option></select></div>
+              <p class="err" id="department-err"></p>
+            </div>
+            <div class="field">
+              <label for="semester" data-c="recruitment.form.semester">Semester</label>
+              <div class="select"><select id="semester" name="semester" required aria-describedby="semester-err"><option value="">Select</option></select></div>
+              <p class="err" id="semester-err"></p>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend data-c="recruitment.form.sectionClubs">Club choice</legend>
+            <div class="field">
+              <label for="preferredClub" data-c="recruitment.form.preferredClub">Preferred club</label>
+              <div class="select"><select id="preferredClub" name="preferredClub" required aria-describedby="preferredClub-err"><option value="">Select</option></select></div>
+              <p class="err" id="preferredClub-err"></p>
+            </div>
+            <div class="field">
+              <label for="secondaryClub" data-c="recruitment.form.secondaryClub">Secondary club</label>
+              <div class="select"><select id="secondaryClub" name="secondaryClub" required aria-describedby="secondaryClub-err"><option value="">Select</option></select></div>
+              <p class="err" id="secondaryClub-err"></p>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend data-c="recruitment.form.sectionPitch">Your pitch</legend>
+            <div class="field field-full">
+              <label for="why" data-c="recruitment.form.why">Why do you want to join CSS?</label>
+              <textarea id="why" name="why" rows="5" maxlength="600" required aria-describedby="why-hint why-err"></textarea>
+              <div class="field-meta"><p class="hint" id="why-hint" data-c="recruitment.form.whyHint">At least 30 characters.</p><span class="count" id="whyCount">0 / 600</span></div>
+              <p class="err" id="why-err"></p>
+            </div>
+          </fieldset>
+
+          <!-- spam trap: real people never see or fill this -->
+          <div class="hp" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off" /></div>
+
+          <div class="form-foot">
+            <p class="form-status" id="formStatus" role="alert"></p>
+            <button type="submit" class="btn btn-sky btn-submit" id="submitBtn"><span class="btn-label" data-c="recruitment.form.submit">Submit application</span> <span aria-hidden="true">→</span></button>
+          </div>
+        </form>
+
+        <div class="success" id="success" hidden tabindex="-1">
+          <div class="shirt shirt-success" id="successShirt"></div>
+          <p class="kicker" data-c="recruitment.successKicker">Application submitted</p>
+          <h2 class="success-title" id="successTitle"></h2>
+          <p class="muted" id="successText"></p>
+          <div class="join-actions">
+            <a href="index.html" class="btn btn-ink">Back to home</a>
+            <a href="clubs.html" class="btn btn-line">Read about the clubs</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div class="footer-crest">
+          <img src="assets/logo.png" data-c-src="site.logo" alt="" width="64" height="64" />
+          <p><b data-c="site.name">COMSATS Sports Society</b><br /><span data-c="site.university">COMSATS University Islamabad</span>, <span data-c="site.campus">Wah Campus</span><br /><span data-c="site.address">G.T. Road, Wah Cantt</span></p>
+        </div>
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="index.html#club" data-c="nav.society">The Society</a>
+          <a href="index.html#sports" data-c="nav.sports">Sports</a>
+          <a href="index.html#fixtures" data-c="nav.fixtures">Fixtures</a>
+          <a href="clubs.html" data-c="nav.clubs">Clubs</a>
+          <a href="recruitment.html" data-c="nav.recruitment">Recruitment</a>
+        </nav>
+        <div class="footer-nav">
+          <a href="https://www.instagram.com/comsatssportssociety/" data-c-href="social.instagram" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/comsatssportssociety" data-c-href="social.facebook" target="_blank" rel="noopener">Facebook</a>
+        </div>
+      </div>
+      <p class="footer-legal">© <span id="year"></span> <span data-c="site.copyright">COMSATS Sports Society. One team, one dream.</span></p>
+    </div>
+    <p class="footer-mark" aria-hidden="true" data-c="site.footerMark">Sports Society</p>
+  </footer>
+
+  <script src="content.js?v=6"></script>
+  <script src="site.js?v=6"></script>
+  <script src="recruit.js?v=6"></script>
+</body>
+</html>

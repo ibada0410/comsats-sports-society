@@ -1,0 +1,513 @@
+{
+  "site": {
+    "name": "COMSATS Sports Society",
+    "crestTop": "COMSATS",
+    "crestBottom": "Sports Society",
+    "university": "COMSATS University Islamabad",
+    "campus": "Wah Campus",
+    "address": "G.T. Road, Wah Cantt",
+    "logo": "assets/logo.png",
+    "footerMark": "Sports Society",
+    "copyright": "COMSATS Sports Society. One team, one dream."
+  },
+  "seo": {
+    "homeTitle": "COMSATS Sports Society · CUI Wah",
+    "homeDescription": "The official sports society of COMSATS University Islamabad, Wah Campus. Tournaments, trials, Sports Week and Color Day. One team, one dream.",
+    "clubsTitle": "Clubs · COMSATS Sports Society",
+    "clubsDescription": "Media, Graphics, Operations, Events and Decor: the five clubs of COMSATS Sports Society, CUI Wah.",
+    "recruitmentTitle": "Recruitment · COMSATS Sports Society",
+    "recruitmentDescription": "Apply to join COMSATS Sports Society, CUI Wah. Pick your club and submit the application form.",
+    "shareImage": "assets/logo.png"
+  },
+  "theme": {
+    "sky": "#0fa3e6",
+    "ink": "#0a1420",
+    "chalk": "#f2f4f5",
+    "signal": "#e1261c"
+  },
+  "social": {
+    "instagram": "https://www.instagram.com/comsatssportssociety/",
+    "facebook": "https://www.facebook.com/comsatssportssociety"
+  },
+  "topbar": {
+    "show": true,
+    "text": "Recruitment open.",
+    "linkText": "Apply online →",
+    "link": "recruitment.html"
+  },
+  "nav": {
+    "society": "The Society",
+    "sports": "Sports",
+    "fixtures": "Fixtures",
+    "council": "Council",
+    "clubs": "Clubs",
+    "cta": "Join us",
+    "recruitment": "Recruitment"
+  },
+  "loader": {
+    "enabled": true,
+    "call1": "On your marks",
+    "call2": "Get set",
+    "call3": "Go!",
+    "six": "Six!",
+    "goal": "Goal!",
+    "time": "9.58"
+  },
+  "home": {
+    "hero": {
+      "line1": "One team.",
+      "line2": "One dream.",
+      "intro": "The official sports society of CUI Wah. We run the campus tournaments, hold trials, and put on Sports Week and Color Day, for players at every level.",
+      "primaryCta": "Join the society",
+      "primaryLink": "recruitment.html",
+      "secondaryCta": "View fixtures",
+      "secondaryLink": "#fixtures"
+    },
+    "nextUp": {
+      "label": "Next up",
+      "emptyLabel": "Next fixture",
+      "emptyTitle": "To be announced",
+      "emptyText": "New dates go up on Instagram first.",
+      "emptyLink": "Follow for updates →",
+      "detailsLink": "Event details →",
+      "days": "Days",
+      "hours": "Hrs",
+      "minutes": "Min",
+      "seconds": "Sec"
+    },
+    "society": {
+      "kicker": "The Society",
+      "title": "We run sport\nat CUI Wah.",
+      "text": "From the first knockout of the semester to the last whistle of Sports Week, the society organises it, staffs it and shows up for it.",
+      "items": [
+        {
+          "title": "Sports Week",
+          "text": "A week of inter-department tournaments, closed out by a finals day and prize ceremony."
+        },
+        {
+          "title": "Tournaments & trials",
+          "text": "Knockout competitions through the semester, and trials for the teams that play other universities."
+        },
+        {
+          "title": "Color Day",
+          "text": "The campus-wide celebration. Colour, music and the whole university out on the grounds."
+        },
+        {
+          "title": "Recruitment",
+          "text": "Every semester we bring in new members for our five clubs: media, graphics, operations, events and decor."
+        }
+      ]
+    },
+    "sports": {
+      "kicker": "Sports",
+      "title": "Pick your game.",
+      "allLabel": "All",
+      "items": [
+        {
+          "name": "Cricket",
+          "category": "Team",
+          "format": "11-a-side",
+          "icon": "cricket"
+        },
+        {
+          "name": "Football",
+          "category": "Team",
+          "format": "11-a-side",
+          "icon": "football"
+        },
+        {
+          "name": "Hockey",
+          "category": "Team",
+          "format": "11-a-side",
+          "icon": "hockey"
+        },
+        {
+          "name": "Futsal",
+          "category": "Team",
+          "format": "5-a-side",
+          "icon": "futsal"
+        },
+        {
+          "name": "Volleyball",
+          "category": "Team",
+          "format": "6-a-side",
+          "icon": "volleyball"
+        },
+        {
+          "name": "Basketball",
+          "category": "Team",
+          "format": "5-a-side",
+          "icon": "basketball"
+        },
+        {
+          "name": "Tug of War",
+          "category": "Team",
+          "format": "8 per side",
+          "icon": "tugofwar"
+        },
+        {
+          "name": "Badminton",
+          "category": "Racquet",
+          "format": "Singles · Doubles",
+          "icon": "badminton"
+        },
+        {
+          "name": "Table Tennis",
+          "category": "Racquet",
+          "format": "Singles · Doubles",
+          "icon": "tabletennis"
+        },
+        {
+          "name": "Tennis",
+          "category": "Racquet",
+          "format": "Singles · Doubles",
+          "icon": "tennis"
+        },
+        {
+          "name": "Athletics",
+          "category": "Individual",
+          "format": "Track · Field",
+          "icon": "athletics"
+        },
+        {
+          "name": "Chess",
+          "category": "Mind",
+          "format": "Rapid · Blitz",
+          "icon": "chess"
+        }
+      ]
+    },
+    "fixtures": {
+      "kicker": "Fixtures & results",
+      "title": "On the calendar.",
+      "tabUpcoming": "Upcoming",
+      "tabResults": "Results",
+      "tabAll": "All",
+      "upcomingLabel": "Upcoming",
+      "resultLabel": "Full time",
+      "emptyText": "No fixtures posted yet. Check Instagram for the latest.",
+      "items": [
+        {
+          "title": "Sports Week SP26",
+          "tag": "Sports Week",
+          "date": "2026-10-20",
+          "time": "09:00",
+          "venue": "Sports Complex, CUI Wah",
+          "status": "upcoming",
+          "description": "Inter-department tournaments across the week, final day and prize ceremony.",
+          "link": "https://www.instagram.com/comsatssportssociety/"
+        },
+        {
+          "title": "Recruitment Drive",
+          "tag": "Recruitment",
+          "date": "2026-10-05",
+          "time": "10:00",
+          "venue": "Main Campus",
+          "status": "upcoming",
+          "description": "Open call for all five clubs. Apply online before the drive.",
+          "link": "recruitment.html"
+        },
+        {
+          "title": "Color Day",
+          "tag": "Festival",
+          "date": "2026-04-15",
+          "time": "",
+          "venue": "Main Campus",
+          "status": "past",
+          "description": "The campus-wide Color Day, organised by the society.",
+          "link": "https://www.instagram.com/comsatssportssociety/"
+        },
+        {
+          "title": "Recruitment '25",
+          "tag": "Recruitment",
+          "date": "2025-10-10",
+          "time": "",
+          "venue": "Main Campus",
+          "status": "past",
+          "description": "Fall 2025 intake for the society's clubs and management.",
+          "link": "https://www.instagram.com/comsatssportssociety/"
+        }
+      ]
+    },
+    "council": {
+      "kicker": "Council SP26",
+      "title": "The squad behind the games.",
+      "text": "The students who plan, book, referee and run every event.",
+      "members": [
+        {
+          "name": "Faculty Advisor",
+          "shirt": "ADVISOR",
+          "number": "1",
+          "role": "Faculty Advisor",
+          "photo": ""
+        },
+        {
+          "name": "Member Name",
+          "shirt": "SURNAME",
+          "number": "10",
+          "role": "President",
+          "photo": ""
+        },
+        {
+          "name": "Member Name",
+          "shirt": "SURNAME",
+          "number": "7",
+          "role": "Vice President",
+          "photo": ""
+        },
+        {
+          "name": "Member Name",
+          "shirt": "SURNAME",
+          "number": "4",
+          "role": "General Secretary",
+          "photo": ""
+        },
+        {
+          "name": "Member Name",
+          "shirt": "SURNAME",
+          "number": "9",
+          "role": "Head of Sports",
+          "photo": ""
+        },
+        {
+          "name": "Member Name",
+          "shirt": "SURNAME",
+          "number": "8",
+          "role": "Events Lead",
+          "photo": ""
+        },
+        {
+          "name": "Member Name",
+          "shirt": "SURNAME",
+          "number": "11",
+          "role": "Media Lead",
+          "photo": ""
+        },
+        {
+          "name": "Member Name",
+          "shirt": "SURNAME",
+          "number": "5",
+          "role": "Finance Lead",
+          "photo": ""
+        }
+      ]
+    },
+    "clubsTeaser": {
+      "kicker": "Clubs",
+      "title": "Five clubs.\nOne matchday.",
+      "text": "Every event needs people who never step on the pitch. Find the crew that fits you.",
+      "cta": "Explore the clubs"
+    },
+    "gallery": {
+      "kicker": "Gallery",
+      "title": "From the touchline.",
+      "linkText": "More on Instagram",
+      "emptyTag": "Photo to come",
+      "items": [
+        {
+          "src": "",
+          "caption": "Color Day"
+        },
+        {
+          "src": "",
+          "caption": "Cricket final"
+        },
+        {
+          "src": "",
+          "caption": "Council SP26"
+        },
+        {
+          "src": "",
+          "caption": "Futsal knockouts"
+        },
+        {
+          "src": "",
+          "caption": "Recruitment '25"
+        }
+      ]
+    },
+    "join": {
+      "title": "Pull on\nthe shirt.",
+      "text": "Recruitment is open for all five clubs. Fill in the form, pick your clubs, and we'll contact you about the interview.",
+      "primaryCta": "Apply now",
+      "secondaryCta": "See the clubs"
+    }
+  },
+  "clubsPage": {
+    "kicker": "Clubs",
+    "line1": "Five clubs.",
+    "line2": "One matchday.",
+    "intro": "Every tournament needs people who never step on the pitch. Cameras, posters, brackets, stages and ceremonies: our five clubs make matchday happen. Pick the one that fits you.",
+    "cta": "Apply to a club",
+    "doesLabel": "What you'll do",
+    "fitLabel": "Good fit if you're into",
+    "applyLabel": "Apply to",
+    "joinTitle": "Find your\nposition.",
+    "joinText": "Choose a preferred club and a second choice on the form. We'll contact you about the interview.",
+    "joinCta": "Apply now"
+  },
+  "clubs": [
+    {
+      "id": "media",
+      "code": "MED",
+      "name": "Media Club",
+      "image": "",
+      "tagline": "We cover every match.",
+      "description": "Photos, video and live coverage for every tournament and event the society runs. If it happened on the ground, Media Club captured it.",
+      "does": [
+        "Shoot photos and video on match days",
+        "Edit highlight reels and post-match content",
+        "Run live stories and coverage on Instagram and Facebook"
+      ],
+      "fit": [
+        "Photography",
+        "Videography",
+        "Editing",
+        "Social media"
+      ]
+    },
+    {
+      "id": "graphics",
+      "code": "GFX",
+      "name": "Graphics Club",
+      "image": "",
+      "tagline": "Every poster, every scorecard.",
+      "description": "The society's visual identity. Graphics Club designs the announcements, fixture posters, results cards, certificates and merch.",
+      "does": [
+        "Design event posters and fixture graphics",
+        "Make results cards and match-day visuals",
+        "Design certificates, banners and merch"
+      ],
+      "fit": [
+        "Photoshop",
+        "Illustrator",
+        "Canva",
+        "Typography"
+      ]
+    },
+    {
+      "id": "operations",
+      "code": "OPS",
+      "name": "Operations Club",
+      "image": "",
+      "tagline": "The whistle blows on time.",
+      "description": "Operations keeps the games running: venues, equipment, schedules, brackets and officials, sorted before the first ball is bowled.",
+      "does": [
+        "Book venues and manage equipment",
+        "Build schedules, draws and brackets",
+        "Run the ground on match days and coordinate referees"
+      ],
+      "fit": [
+        "Organised",
+        "Calm under pressure",
+        "Communication",
+        "Problem solving"
+      ]
+    },
+    {
+      "id": "events",
+      "code": "EVT",
+      "name": "Events Club",
+      "image": "",
+      "tagline": "From Sports Week to Color Day.",
+      "description": "Events Club plans the big days: Sports Week, Color Day, opening and closing ceremonies, guests and hosting.",
+      "does": [
+        "Plan event timelines and run-of-show",
+        "Coordinate guests, hosts and ceremonies",
+        "Manage registrations and participants"
+      ],
+      "fit": [
+        "Planning",
+        "Hosting",
+        "Teamwork",
+        "Public speaking"
+      ]
+    },
+    {
+      "id": "decor",
+      "code": "DEC",
+      "name": "Decor Club",
+      "image": "",
+      "tagline": "We set the stage.",
+      "description": "Decor turns a ground into a venue: stage backdrops, banners, prize tables and the full Color Day setup.",
+      "does": [
+        "Design and build stage and backdrops",
+        "Dress venues with banners and flags",
+        "Set up ceremonies and prize tables"
+      ],
+      "fit": [
+        "Hands-on",
+        "Crafts",
+        "Eye for detail",
+        "Creativity"
+      ]
+    }
+  ],
+  "recruitment": {
+    "open": true,
+    "closedTitle": "Recruitment is closed.",
+    "closedText": "Applications are closed for now. Follow us on Instagram to hear when the next intake opens.",
+    "endpoint": "",
+    "kicker": "Recruitment",
+    "line1": "Sign for",
+    "line2": "the society.",
+    "lead": "Applications are open for all five clubs. It takes about three minutes.",
+    "stepsTitle": "What happens next",
+    "steps": [
+      {
+        "title": "Apply",
+        "text": "Submit this form with your first and second club choice."
+      },
+      {
+        "title": "We contact you",
+        "text": "The council reviews applications and messages you with an interview slot."
+      },
+      {
+        "title": "Interview",
+        "text": "A short chat with the club leads."
+      },
+      {
+        "title": "Welcome to the squad",
+        "text": "Successful applicants are added to their club."
+      }
+    ],
+    "help": "Questions? DM us on",
+    "form": {
+      "title": "Application form",
+      "requiredNote": "All fields are required",
+      "sectionDetails": "Your details",
+      "sectionAcademic": "Academic",
+      "sectionClubs": "Club choice",
+      "sectionPitch": "Your pitch",
+      "name": "Full name",
+      "contact": "Contact number",
+      "email": "Email",
+      "regNo": "Registration number",
+      "regHint": "Format: FA23-BCS-045 or SP24-BSE-012",
+      "department": "Department",
+      "semester": "Semester",
+      "preferredClub": "Preferred club",
+      "secondaryClub": "Secondary club",
+      "why": "Why do you want to join CSS?",
+      "whyHint": "At least 30 characters.",
+      "submit": "Submit application",
+      "semesters": 8
+    },
+    "departments": [
+      "Computer Science",
+      "Software Engineering",
+      "Electrical & Computer Engineering",
+      "Mechanical Engineering",
+      "Management Sciences",
+      "Mathematics",
+      "Physics",
+      "Humanities",
+      "Economics",
+      "Architecture"
+    ],
+    "successKicker": "Application submitted",
+    "successTitle": "Welcome to the trials, {first}.",
+    "successText": "We've received your application for {club} (second choice: {second}). The council will contact you on {contact} or {email} about your interview.",
+    "sheetUrl": ""
+  }
+}
