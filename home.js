@@ -45,7 +45,7 @@ function renderNextUp(C) {
       <div class="nextup-body">
         <p class="nextup-title">${esc(t.emptyTitle)}</p>
         <p class="nextup-meta">${esc(t.emptyText)}</p>
-        <a ${linkAttrs(C.social.instagram)}>${esc(t.emptyLink)}</a>
+        ${t.emptyUrl ? `<a ${linkAttrs(t.emptyUrl)}>${esc(t.emptyLink)}</a>` : ""}
       </div>`;
     return;
   }
@@ -162,7 +162,7 @@ function renderFixtures(C) {
       const d = eventTime(e);
       const status = e.status === "upcoming"
         ? `<span class="fx-status"><span class="dot" aria-hidden="true"></span>${esc(f.upcomingLabel)}</span>`
-        : `<span class="fx-status ft"><b>FT</b>${esc(f.resultLabel)}</span>`;
+        : `<span class="fx-status ft">${f.resultBadge ? `<b>${esc(f.resultBadge)}</b>` : ""}${esc(f.resultLabel)}</span>`;
       const Tag = e.link ? "a" : "div";
       return `
         <li>
@@ -184,8 +184,11 @@ function renderFixtures(C) {
 
 /* ---------- Council ---------- */
 function renderSquad(C) {
-  $("#squadGrid").innerHTML = C.home.council.members.map(
-    (m, i) => `
+  // "Members in top row" puts the first N members on their own centred row (e.g. 3 on top, 5 below)
+  const top = parseInt(C.home.council.topRow, 10) || 0;
+  const members = C.home.council.members;
+  $("#squadGrid").innerHTML = members.map(
+    (m, i) => `${i === top && top > 0 && top < members.length ? '<li class="squad-break" aria-hidden="true"></li>' : ""}
       <li class="player rv" style="--d:${(i % 4) * 0.08}s">
         <div class="shirt ${m.photo ? "has-photo" : ""}">
           ${m.photo

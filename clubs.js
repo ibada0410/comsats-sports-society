@@ -21,7 +21,7 @@ function render(C) {
         <div class="wrap club-panel-grid">
           <div class="club-code-wrap" data-rv>
             <span class="club-code" aria-hidden="true">${esc(c.code)}</span>
-            <span class="club-of">Club ${i + 1} of ${C.clubs.length}</span>
+            <span class="club-of">${esc(String(p.countLabel || "Club {n} of {total}").replace("{n}", i + 1).replace("{total}", C.clubs.length))}</span>
             ${c.image ? `<img class="club-image" src="${esc(Content.safeUrl(c.image))}" alt="${esc(c.name)}" loading="lazy" />` : ""}
           </div>
           <div class="club-body" data-rv>

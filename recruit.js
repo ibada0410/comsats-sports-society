@@ -22,10 +22,10 @@ function render(C) {
 
   const semesters = Array.from({ length: Math.max(1, parseInt(R.form.semesters, 10) || 8) }, (_, i) => String(i + 1));
   const clubs = C.clubs.map((c) => c.name);
-  fillSelect("department", `Select ${R.form.department.toLowerCase()}`, R.departments);
-  fillSelect("semester", `Select ${R.form.semester.toLowerCase()}`, semesters);
-  fillSelect("preferredClub", "Select a club", clubs);
-  fillSelect("secondaryClub", "Select a club", clubs);
+  fillSelect("department", R.form.selectDepartment || "Select department", R.departments);
+  fillSelect("semester", R.form.selectSemester || "Select semester", semesters);
+  fillSelect("preferredClub", R.form.selectClub || "Select a club", clubs);
+  fillSelect("secondaryClub", R.form.selectClub || "Select a club", clubs);
 
   // preselect from a clubs page link (recruitment.html?club=Media%20Club)
   const wanted = new URLSearchParams(location.search).get("club");
@@ -52,16 +52,20 @@ const clean = {
   reg: (v) => v.trim().toUpperCase().replace(/\s+/g, ""),
 };
 
+// error messages are editable in Admin → Recruitment → Messages
+const msg = (key, vars = {}) =>
+  String(Content.get(`recruitment.messages.${key}`) || key).replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
+
 const rules = {
-  name: (v) => (v.trim().length < 3 ? "Enter your full name." : ""),
-  contact: (v) => (/^03\d{9}$/.test(clean.phone(v)) ? "" : "Enter an 11-digit mobile number, like 0312 3456789."),
-  email: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? "" : "Enter a valid email address."),
-  regNo: (v) => (/^(FA|SP)\d{2}-[A-Z]{2,5}-\d{2,3}$/.test(clean.reg(v)) ? "" : "Use the format FA23-BCS-045."),
-  department: (v) => (v ? "" : "Select your department."),
-  semester: (v) => (v ? "" : "Select your semester."),
-  preferredClub: (v) => (v ? "" : "Select your preferred club."),
-  secondaryClub: (v) => (!v ? "Select a secondary club." : v === $("#preferredClub").value ? "Pick a different club from your preferred one." : ""),
-  why: (v) => (v.trim().length < 30 ? `Tell us a bit more (${v.trim().length}/30 characters).` : ""),
+  name: (v) => (v.trim().length < 3 ? msg("name") : ""),
+  contact: (v) => (/^03\d{9}$/.test(clean.phone(v)) ? "" : msg("contact")),
+  email: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? "" : msg("email")),
+  regNo: (v) => (/^(FA|SP)\d{2}-[A-Z]{2,5}-\d{2,3}$/.test(clean.reg(v)) ? "" : msg("regNo")),
+  department: (v) => (v ? "" : msg("department")),
+  semester: (v) => (v ? "" : msg("semester")),
+  preferredClub: (v) => (v ? "" : msg("preferredClub")),
+  secondaryClub: (v) => (!v ? msg("secondaryClub") : v === $("#preferredClub").value ? msg("secondarySame") : ""),
+  why: (v) => (v.trim().length < 30 ? msg("why", { count: v.trim().length }) : ""),
 };
 
 function check(name) {
@@ -87,7 +91,7 @@ $("#why").addEventListener("input", (e) => { $("#whyCount").textContent = `${e.t
 function setBusy(busy) {
   submitBtn.disabled = busy;
   submitBtn.classList.toggle("is-busy", busy);
-  $(".btn-label", submitBtn).textContent = busy ? "Submitting…" : (Content.get("recruitment.form.submit") || "Submit application");
+  $(".btn-label", submitBtn).textContent = busy ? (Content.get("recruitment.form.submitting") || "Submitting…") : (Content.get("recruitment.form.submit") || "Submit application");
 }
 
 function showStatus(msg) {
@@ -101,7 +105,7 @@ form.addEventListener("submit", async (e) => {
   const invalid = Object.keys(rules).filter((n) => !check(n));
   if (invalid.length) {
     form.elements[invalid[0]].focus();
-    showStatus(`Fix ${invalid.length === 1 ? "the highlighted field" : `the ${invalid.length} highlighted fields`} to submit.`);
+    showStatus(invalid.length === 1 ? msg("fixOne") : msg("fixMany", { count: invalid.length }));
     return;
   }
 
@@ -121,7 +125,7 @@ form.addEventListener("submit", async (e) => {
 
   const endpoint = Content.get("recruitment.endpoint");
   if (!endpoint) {
-    showStatus("The form isn't connected to the society's Google Sheet yet, so nothing was sent. Add the Google Sheet link in Admin → Recruitment (see apps-script/SETUP.md).");
+    showStatus(msg("notConnected"));
     return;
   }
 
@@ -132,12 +136,12 @@ form.addEventListener("submit", async (e) => {
     const data = await res.json().catch(() => ({}));
     if (data.ok) return showSuccess(payload);
     if (data.error === "duplicate") {
-      showStatus(`An application with registration number ${payload.regNo} has already been submitted. DM us on Instagram if you need to change it.`);
+      showStatus(msg("duplicate", { regNo: payload.regNo }));
     } else {
-      showStatus("Your application didn't go through. Check your connection and submit again.");
+      showStatus(msg("failed"));
     }
   } catch (err) {
-    showStatus("Your application didn't go through. Check your connection and submit again.");
+    showStatus(msg("failed"));
   } finally {
     setBusy(false);
   }

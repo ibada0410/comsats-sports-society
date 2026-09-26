@@ -8,6 +8,9 @@ const SPORT_ICON_OPTIONS = [
   ["swimming", "Swimming"], ["squash", "Squash"], ["kabaddi", "Kabaddi"], ["trophy", "Trophy (any sport)"],
 ];
 
+const DISPLAY_FONTS = ["Big Shoulders Display", "Anton", "Bebas Neue", "Oswald", "Barlow Condensed", "Teko", "Saira Extra Condensed"].map((f) => [f, f]);
+const BODY_FONTS = ["Archivo", "Barlow", "Manrope", "DM Sans", "Work Sans", "Poppins", "Inter"].map((f) => [f, f]);
+
 const SCHEMA = [
   /* ================= GENERAL ================= */
   {
@@ -21,26 +24,33 @@ const SCHEMA = [
       { key: "site.university", label: "University", type: "text" },
       { key: "site.campus", label: "Campus", type: "text" },
       { key: "site.address", label: "Address", type: "text" },
-      { key: "site.footerMark", label: "Giant footer word", type: "text", help: "The huge faded text at the very bottom of every page." },
-      { key: "site.copyright", label: "Copyright line", type: "text", help: "The year is added automatically in front." },
     ],
   },
   {
-    group: "General", id: "theme", title: "Colours", page: "index.html", anchor: "#top",
-    intro: "The four brand colours used across the whole site. Changes show in the preview straight away.",
+    group: "General", id: "theme", title: "Colours & fonts", page: "index.html", anchor: "#top",
+    intro: "The brand colours and fonts used across the whole site. Changes show in the preview straight away.",
     fields: [
       { key: "theme.sky", label: "Accent (sky blue)", type: "color", help: "Buttons, highlights, second line of big headings." },
       { key: "theme.ink", label: "Dark (ink)", type: "color", help: "Text, dark sections, footer." },
       { key: "theme.chalk", label: "Background (chalk)", type: "color" },
       { key: "theme.signal", label: "Alert (red)", type: "color", help: "“Upcoming” dots, errors, the SIX! stamp." },
+      { key: "theme.displayFont", label: "Heading font", type: "select", half: true, options: DISPLAY_FONTS, help: "The big sporty headings." },
+      { key: "theme.bodyFont", label: "Text font", type: "select", half: true, options: BODY_FONTS, help: "Paragraphs, buttons and labels." },
     ],
-    actions: [{ label: "Reset to original colours", run: "resetTheme" }],
+    actions: [{ label: "Reset to original colours & fonts", run: "resetTheme" }],
   },
   {
     group: "General", id: "social", title: "Social links", page: "index.html", anchor: "#top",
+    intro: "Shown in the top bar and the footer. Add any network (TikTok, YouTube, WhatsApp…).",
     fields: [
-      { key: "social.instagram", label: "Instagram", type: "url" },
-      { key: "social.facebook", label: "Facebook", type: "url" },
+      {
+        key: "social.links", label: "Social links", type: "list", itemLabel: "link", titleKey: "label", subtitleKey: "url",
+        item: { label: "New network", url: "https://" },
+        fields: [
+          { key: "label", label: "Name", type: "text", half: true },
+          { key: "url", label: "Web address", type: "url", half: true },
+        ],
+      },
     ],
   },
   {
@@ -54,16 +64,47 @@ const SCHEMA = [
     ],
   },
   {
-    group: "General", id: "nav", title: "Menu labels", page: "index.html", anchor: "#top",
+    group: "General", id: "nav", title: "Menu", page: "index.html", anchor: "#top",
+    intro: "The links in the header. Add, rename, reorder or remove them.",
     fields: [
-      { key: "nav.society", label: "The Society", type: "text" },
-      { key: "nav.sports", label: "Sports", type: "text" },
-      { key: "nav.fixtures", label: "Fixtures", type: "text" },
-      { key: "nav.council", label: "Council", type: "text" },
-      { key: "nav.clubs", label: "Clubs", type: "text" },
-      { key: "nav.cta", label: "Join button", type: "text" },
-      { key: "nav.recruitment", label: "Recruitment (footer)", type: "text" },
+      {
+        key: "nav.links", label: "Menu links", type: "list", itemLabel: "link", titleKey: "label", subtitleKey: "link",
+        item: { label: "New link", link: "" },
+        fields: [
+          { key: "label", label: "Text", type: "text", half: true },
+          { key: "link", label: "Goes to", type: "url", half: true, help: "A page (clubs.html), a section (index.html#sports) or a web address." },
+        ],
+      },
+      { key: "nav.cta", label: "Highlighted button text", type: "text", half: true },
+      { key: "nav.ctaLink", label: "Highlighted button link", type: "url", half: true },
     ],
+  },
+  {
+    group: "General", id: "footer", title: "Footer", page: "index.html", anchor: "footer",
+    intro: "Everything at the bottom of every page.",
+    fields: [
+      { key: "footer.mark", label: "Giant footer word", type: "text", help: "The huge faded text at the very bottom." },
+      { key: "footer.copyright", label: "Copyright line", type: "text", help: "The year is added automatically in front." },
+      { key: "footer.showAddress", label: "Show university and address", type: "toggle" },
+      { key: "footer.showSocials", label: "Show social links", type: "toggle" },
+      {
+        key: "footer.links", label: "Footer links", type: "list", itemLabel: "link", titleKey: "label", subtitleKey: "link",
+        item: { label: "New link", link: "" },
+        fields: [
+          { key: "label", label: "Text", type: "text", half: true },
+          { key: "link", label: "Goes to", type: "url", half: true, help: "A page (clubs.html), a section (index.html#sports) or a web address." },
+        ],
+      },
+    ],
+    subsections: [{
+      title: "Credit line",
+      fields: [
+        { key: "footer.credit.show", label: "Show the credit line", type: "toggle" },
+        { key: "footer.credit.text", label: "Text", type: "text", half: true },
+        { key: "footer.credit.linkText", label: "Link text", type: "text", half: true },
+        { key: "footer.credit.url", label: "Link goes to", type: "url" },
+      ],
+    }],
   },
   {
     group: "General", id: "loader", title: "Loading screen", page: "index.html", anchor: "#top",
@@ -80,6 +121,15 @@ const SCHEMA = [
     actions: [{ label: "Replay loading screen in preview", run: "replayIntro" }],
   },
   {
+    group: "General", id: "labels", title: "Other labels", page: "index.html", anchor: "#top",
+    intro: "Small words used around the site, including ones read out by screen readers.",
+    fields: [
+      { key: "ui.skip", label: "“Skip to content” link", type: "text", help: "Appears when using the keyboard." },
+      { key: "ui.menu", label: "Mobile menu button", type: "text", help: "Read out by screen readers." },
+      { key: "ui.closePhoto", label: "Close photo button", type: "text" },
+    ],
+  },
+  {
     group: "General", id: "seo", title: "Search & sharing", page: "index.html", anchor: "#top",
     intro: "What Google shows, and the preview card when a link is shared on WhatsApp or social media.",
     fields: [
@@ -94,6 +144,20 @@ const SCHEMA = [
   },
 
   /* ================= HOME ================= */
+  {
+    group: "Home page", id: "sections", title: "Show / hide sections", page: "index.html", anchor: "#top",
+    intro: "Switch off any section to hide it from the home page. Its content is kept, so you can switch it back on later.",
+    fields: [
+      { key: "home.sections.strip", label: "Scrolling sports strip", type: "toggle" },
+      { key: "home.sections.society", label: "The Society", type: "toggle" },
+      { key: "home.sections.sports", label: "Sports", type: "toggle" },
+      { key: "home.sections.fixtures", label: "Fixtures & results", type: "toggle" },
+      { key: "home.sections.council", label: "Council", type: "toggle" },
+      { key: "home.sections.clubsTeaser", label: "Clubs section", type: "toggle" },
+      { key: "home.sections.gallery", label: "Gallery", type: "toggle" },
+      { key: "home.sections.join", label: "Join banner", type: "toggle" },
+    ],
+  },
   {
     group: "Home page", id: "hero", title: "Hero", page: "index.html", anchor: "#top",
     fields: [
@@ -118,7 +182,8 @@ const SCHEMA = [
         { key: "home.nextUp.emptyLabel", label: "Label when nothing is scheduled", type: "text" },
         { key: "home.nextUp.emptyTitle", label: "Title when nothing is scheduled", type: "text" },
         { key: "home.nextUp.emptyText", label: "Text when nothing is scheduled", type: "text" },
-        { key: "home.nextUp.emptyLink", label: "Link text when nothing is scheduled", type: "text" },
+        { key: "home.nextUp.emptyLink", label: "Link text when nothing is scheduled", type: "text", half: true },
+        { key: "home.nextUp.emptyUrl", label: "Link when nothing is scheduled", type: "url", half: true },
       ],
     }],
   },
@@ -180,6 +245,7 @@ const SCHEMA = [
       { key: "home.fixtures.tabAll", label: "“All” tab", type: "text", half: true },
       { key: "home.fixtures.upcomingLabel", label: "Upcoming status label", type: "text", half: true },
       { key: "home.fixtures.resultLabel", label: "Finished status label", type: "text", half: true },
+      { key: "home.fixtures.resultBadge", label: "Finished badge", type: "text", half: true, help: "The dark box before the label, e.g. FT" },
       { key: "home.fixtures.emptyText", label: "Message when the list is empty", type: "text" },
     ],
   },
@@ -198,6 +264,7 @@ const SCHEMA = [
           { key: "photo", label: "Photo (optional)", type: "image" },
         ],
       },
+      { key: "home.council.topRow", label: "Members in top row", type: "number", min: 0, max: 12, help: "The first members in the list sit on their own centred row (e.g. 3 on top, 5 below). Use 0 for even rows." },
       { key: "home.council.kicker", label: "Small label", type: "text" },
       { key: "home.council.title", label: "Heading", type: "text" },
       { key: "home.council.text", label: "Paragraph", type: "textarea" },
@@ -210,7 +277,8 @@ const SCHEMA = [
       { key: "home.clubsTeaser.kicker", label: "Small label", type: "text" },
       { key: "home.clubsTeaser.title", label: "Heading", type: "textarea", rows: 2 },
       { key: "home.clubsTeaser.text", label: "Paragraph", type: "textarea" },
-      { key: "home.clubsTeaser.cta", label: "Button text", type: "text" },
+      { key: "home.clubsTeaser.cta", label: "Button text", type: "text", half: true },
+      { key: "home.clubsTeaser.link", label: "Button link", type: "url", half: true },
     ],
   },
   {
@@ -224,7 +292,8 @@ const SCHEMA = [
       },
       { key: "home.gallery.kicker", label: "Small label", type: "text" },
       { key: "home.gallery.title", label: "Heading", type: "text" },
-      { key: "home.gallery.linkText", label: "Instagram link text", type: "text" },
+      { key: "home.gallery.linkText", label: "Top-right link text", type: "text", half: true },
+      { key: "home.gallery.link", label: "Top-right link", type: "url", half: true },
       { key: "home.gallery.emptyTag", label: "Empty tile label", type: "text" },
     ],
   },
@@ -233,8 +302,10 @@ const SCHEMA = [
     fields: [
       { key: "home.join.title", label: "Big heading", type: "textarea", rows: 2 },
       { key: "home.join.text", label: "Paragraph", type: "textarea" },
-      { key: "home.join.primaryCta", label: "Main button", type: "text" },
-      { key: "home.join.secondaryCta", label: "Second button", type: "text" },
+      { key: "home.join.primaryCta", label: "Main button", type: "text", half: true },
+      { key: "home.join.primaryLink", label: "Main button link", type: "url", half: true },
+      { key: "home.join.secondaryCta", label: "Second button", type: "text", half: true },
+      { key: "home.join.secondaryLink", label: "Second button link", type: "url", half: true },
     ],
   },
 
@@ -266,7 +337,9 @@ const SCHEMA = [
       { key: "clubsPage.line1", label: "Headline, line 1", type: "text" },
       { key: "clubsPage.line2", label: "Headline, line 2 (blue)", type: "text" },
       { key: "clubsPage.intro", label: "Intro paragraph", type: "textarea" },
-      { key: "clubsPage.cta", label: "Button text", type: "text" },
+      { key: "clubsPage.cta", label: "Button text", type: "text", half: true },
+      { key: "clubsPage.ctaLink", label: "Button link (top and bottom)", type: "url", half: true },
+      { key: "clubsPage.countLabel", label: "Club counter", type: "text", help: "Use {n} and {total}, e.g. Club {n} of {total}" },
       { key: "clubsPage.doesLabel", label: "“What you'll do” label", type: "text" },
       { key: "clubsPage.fitLabel", label: "“Good fit” label", type: "text" },
       { key: "clubsPage.applyLabel", label: "Apply button prefix", type: "text", help: "Shown as “Apply to Media Club”." },
@@ -283,6 +356,8 @@ const SCHEMA = [
       { key: "recruitment.open", label: "Recruitment is open", type: "toggle", help: "Turn off to replace the form with the “closed” message." },
       { key: "recruitment.closedTitle", label: "Closed heading", type: "text" },
       { key: "recruitment.closedText", label: "Closed message", type: "textarea" },
+      { key: "recruitment.closedCta", label: "Closed button text", type: "text", half: true },
+      { key: "recruitment.closedLink", label: "Closed button link", type: "url", half: true },
       { key: "recruitment.endpoint", label: "Google Sheet web-app link", type: "url", help: "The Apps Script /exec link that saves applications (see apps-script/SETUP.md)." },
       { key: "recruitment.sheetUrl", label: "Applications sheet (for you)", type: "url", help: "Paste your Google Sheet's link to open it from here. Not shown on the site." },
     ],
@@ -301,7 +376,9 @@ const SCHEMA = [
         item: { title: "New step", text: "" },
         fields: [{ key: "title", label: "Title", type: "text" }, { key: "text", label: "Description", type: "textarea" }],
       },
-      { key: "recruitment.help", label: "Help line", type: "text", help: "Followed by the Instagram and Facebook links." },
+      { key: "recruitment.help", label: "Help line", type: "text" },
+      { key: "recruitment.helpLinkText", label: "Help link text", type: "text", half: true },
+      { key: "recruitment.helpLink", label: "Help link", type: "url", half: true },
     ],
   },
   {
@@ -326,7 +403,41 @@ const SCHEMA = [
       { key: "recruitment.form.secondaryClub", label: "Secondary club label", type: "text", half: true },
       { key: "recruitment.form.why", label: "Question label", type: "text" },
       { key: "recruitment.form.whyHint", label: "Question hint", type: "text" },
-      { key: "recruitment.form.submit", label: "Submit button", type: "text" },
+      { key: "recruitment.form.submit", label: "Submit button", type: "text", half: true },
+      { key: "recruitment.form.submitting", label: "Submit button while sending", type: "text", half: true },
+    ],
+    subsections: [{
+      title: "Placeholders (grey hint text inside fields)",
+      fields: [
+        { key: "recruitment.form.namePlaceholder", label: "Name", type: "text", half: true },
+        { key: "recruitment.form.contactPlaceholder", label: "Contact number", type: "text", half: true },
+        { key: "recruitment.form.emailPlaceholder", label: "Email", type: "text", half: true },
+        { key: "recruitment.form.regPlaceholder", label: "Registration number", type: "text", half: true },
+        { key: "recruitment.form.selectDepartment", label: "Department dropdown", type: "text", half: true },
+        { key: "recruitment.form.selectSemester", label: "Semester dropdown", type: "text", half: true },
+        { key: "recruitment.form.selectClub", label: "Club dropdowns", type: "text", half: true },
+      ],
+    }],
+  },
+  {
+    group: "Recruitment", id: "recruitMessages", title: "Error messages", page: "recruitment.html", anchor: "#applyForm",
+    intro: "What applicants see when something needs fixing. {count} and {regNo} are filled in automatically.",
+    fields: [
+      { key: "recruitment.messages.name", label: "Name missing", type: "text" },
+      { key: "recruitment.messages.contact", label: "Wrong contact number", type: "text" },
+      { key: "recruitment.messages.email", label: "Wrong email", type: "text" },
+      { key: "recruitment.messages.regNo", label: "Wrong registration number", type: "text" },
+      { key: "recruitment.messages.department", label: "No department", type: "text" },
+      { key: "recruitment.messages.semester", label: "No semester", type: "text" },
+      { key: "recruitment.messages.preferredClub", label: "No preferred club", type: "text" },
+      { key: "recruitment.messages.secondaryClub", label: "No secondary club", type: "text" },
+      { key: "recruitment.messages.secondarySame", label: "Same club picked twice", type: "text" },
+      { key: "recruitment.messages.why", label: "Answer too short", type: "text" },
+      { key: "recruitment.messages.fixOne", label: "One field to fix", type: "text" },
+      { key: "recruitment.messages.fixMany", label: "Several fields to fix", type: "text" },
+      { key: "recruitment.messages.duplicate", label: "Already applied", type: "textarea" },
+      { key: "recruitment.messages.failed", label: "Sending failed", type: "textarea" },
+      { key: "recruitment.messages.notConnected", label: "Form not connected yet", type: "textarea" },
     ],
   },
   {
@@ -336,6 +447,8 @@ const SCHEMA = [
       { key: "recruitment.successKicker", label: "Small label", type: "text" },
       { key: "recruitment.successTitle", label: "Heading", type: "text" },
       { key: "recruitment.successText", label: "Message", type: "textarea" },
+      { key: "recruitment.successHome", label: "First button", type: "text", half: true },
+      { key: "recruitment.successClubs", label: "Second button", type: "text", half: true },
     ],
   },
 
@@ -345,4 +458,4 @@ const SCHEMA = [
   { group: "Tools", id: "backup", title: "Backup", tool: "backup", intro: "Download all content as a file, or restore from one." },
 ];
 
-const DEFAULT_THEME = { sky: "#0fa3e6", ink: "#0a1420", chalk: "#f2f4f5", signal: "#e1261c" };
+const DEFAULT_THEME = { sky: "#0fa3e6", ink: "#0a1420", chalk: "#f2f4f5", signal: "#e1261c", displayFont: "Big Shoulders Display", bodyFont: "Archivo" };

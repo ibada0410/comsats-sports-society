@@ -20,8 +20,41 @@
     return s;
   };
 
+  /* fonts the admin can pick (Google Fonts) */
+  const FONTS = {
+    "Big Shoulders Display": "Big+Shoulders+Display:wght@700;800;900",
+    "Anton": "Anton",
+    "Bebas Neue": "Bebas+Neue",
+    "Oswald": "Oswald:wght@500;600;700",
+    "Barlow Condensed": "Barlow+Condensed:wght@600;700;800;900",
+    "Teko": "Teko:wght@500;600;700",
+    "Saira Extra Condensed": "Saira+Extra+Condensed:wght@700;800;900",
+    "Archivo": "Archivo:wdth,wght@62..125,400..800",
+    "Barlow": "Barlow:wght@400;500;600;700",
+    "Manrope": "Manrope:wght@400;500;600;700;800",
+    "DM Sans": "DM+Sans:wght@400;500;600;700",
+    "Work Sans": "Work+Sans:wght@400;500;600;700",
+    "Poppins": "Poppins:wght@400;500;600;700",
+    "Inter": "Inter:wght@400;500;600;700",
+  };
+  const BUILT_IN = ["Big Shoulders Display", "Archivo"];
+
+  function applyFonts(t = {}) {
+    const r = document.documentElement.style;
+    const extra = [t.displayFont, t.bodyFont].filter((f) => f && FONTS[f] && !BUILT_IN.includes(f));
+    let link = document.getElementById("cms-fonts");
+    if (extra.length) {
+      const href = `https://fonts.googleapis.com/css2?${extra.map((f) => `family=${FONTS[f]}`).join("&")}&display=swap`;
+      if (!link) { link = document.createElement("link"); link.id = "cms-fonts"; link.rel = "stylesheet"; document.head.append(link); }
+      if (link.href !== href) link.href = href;
+    }
+    if (t.displayFont && FONTS[t.displayFont]) r.setProperty("--display", `"${t.displayFont}", "Arial Narrow", sans-serif`);
+    if (t.bodyFont && FONTS[t.bodyFont]) r.setProperty("--body", `"${t.bodyFont}", "Helvetica Neue", sans-serif`);
+  }
+
   function applyTheme(t = {}) {
     const r = document.documentElement.style;
+    applyFonts(t);
     if (t.sky) { r.setProperty("--sky", t.sky); r.setProperty("--sky-deep", `color-mix(in srgb, ${t.sky} 78%, #000)`); }
     if (t.ink) { r.setProperty("--ink", t.ink); r.setProperty("--ink-2", `color-mix(in srgb, ${t.ink} 86%, #fff)`); }
     if (t.chalk) r.setProperty("--chalk", t.chalk);
@@ -62,8 +95,13 @@
       const v = get(C, el.dataset.cAria);
       if (v) el.setAttribute("aria-label", String(v).replace(/\n/g, " "));
     });
+    root.querySelectorAll("[data-c-ph]").forEach((el) => {
+      const v = get(C, el.dataset.cPh);
+      if (v !== undefined) el.setAttribute("placeholder", v);
+    });
+    // hidden only when explicitly switched off (missing settings count as "show")
     root.querySelectorAll("[data-c-show]").forEach((el) => {
-      el.hidden = !get(C, el.dataset.cShow);
+      el.hidden = get(C, el.dataset.cShow) === false;
     });
   }
 
@@ -115,22 +153,33 @@
     if (cachedText && !isPreview) apply(JSON.parse(cachedText));
   } catch (e) { cachedText = null; }
 
-  /* 2. fresh copy from the server */
+  /* 2. fresh copy from the server, with any settings it's missing filled in from content.json
+        (content published before a new setting existed keeps working) */
+  function fillDefaults(target, defaults) {
+    if (!defaults || typeof defaults !== "object" || Array.isArray(defaults)) return target;
+    for (const [k, v] of Object.entries(defaults)) {
+      if (!(k in target)) target[k] = v;
+      else if (v && typeof v === "object" && !Array.isArray(v) && target[k] && typeof target[k] === "object" && !Array.isArray(target[k])) fillDefaults(target[k], v);
+    }
+    return target;
+  }
+
   async function load() {
-    const tryFetch = async (url) => {
+    const getJson = async (url) => {
       const res = await fetch(url, { cache: "no-store" });
       if (!res.ok) throw new Error(res.status);
-      return res.text();
+      return res.json();
     };
-    let text;
-    try { text = await tryFetch("/api/content"); JSON.parse(text); }
-    catch (e) {
-      try { text = await tryFetch("content.json"); }
-      catch (err) { console.error("Could not load site content", err); return; }
-    }
+    const [published, defaults] = await Promise.all([
+      getJson("/api/content").catch(() => null),
+      getJson("content.json").catch(() => null),
+    ]);
+    if (!published && !defaults) { console.error("Could not load site content"); return; }
+    const merged = published ? fillDefaults(published, defaults) : defaults;
+    const text = JSON.stringify(merged);
     if (text !== cachedText) {
       try { localStorage.setItem(CACHE_KEY, text); } catch (e) {}
-      if (!isPreview || !current) apply(JSON.parse(text));
+      if (!isPreview || !current) apply(merged);
     }
   }
   load();

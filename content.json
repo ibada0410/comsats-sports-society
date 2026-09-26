@@ -6,9 +6,7 @@
     "university": "COMSATS University Islamabad",
     "campus": "Wah Campus",
     "address": "G.T. Road, Wah Cantt",
-    "logo": "assets/logo.png",
-    "footerMark": "Sports Society",
-    "copyright": "COMSATS Sports Society. One team, one dream."
+    "logo": "assets/logo.png"
   },
   "seo": {
     "homeTitle": "COMSATS Sports Society · CUI Wah",
@@ -23,11 +21,21 @@
     "sky": "#0fa3e6",
     "ink": "#0a1420",
     "chalk": "#f2f4f5",
-    "signal": "#e1261c"
+    "signal": "#e1261c",
+    "displayFont": "Big Shoulders Display",
+    "bodyFont": "Archivo"
   },
   "social": {
-    "instagram": "https://www.instagram.com/comsatssportssociety/",
-    "facebook": "https://www.facebook.com/comsatssportssociety"
+    "links": [
+      {
+        "label": "Instagram",
+        "url": "https://www.instagram.com/comsatssportssociety/"
+      },
+      {
+        "label": "Facebook",
+        "url": "https://www.facebook.com/comsatssportssociety"
+      }
+    ]
   },
   "topbar": {
     "show": true,
@@ -36,13 +44,30 @@
     "link": "recruitment.html"
   },
   "nav": {
-    "society": "The Society",
-    "sports": "Sports",
-    "fixtures": "Fixtures",
-    "council": "Council",
-    "clubs": "Clubs",
+    "links": [
+      {
+        "label": "The Society",
+        "link": "index.html#club"
+      },
+      {
+        "label": "Sports",
+        "link": "index.html#sports"
+      },
+      {
+        "label": "Fixtures",
+        "link": "index.html#fixtures"
+      },
+      {
+        "label": "Council",
+        "link": "index.html#squad"
+      },
+      {
+        "label": "Clubs",
+        "link": "clubs.html"
+      }
+    ],
     "cta": "Join us",
-    "recruitment": "Recruitment"
+    "ctaLink": "recruitment.html"
   },
   "loader": {
     "enabled": true,
@@ -73,7 +98,8 @@
       "days": "Days",
       "hours": "Hrs",
       "minutes": "Min",
-      "seconds": "Sec"
+      "seconds": "Sec",
+      "emptyUrl": "https://www.instagram.com/comsatssportssociety/"
     },
     "society": {
       "kicker": "The Society",
@@ -227,7 +253,8 @@
           "description": "Fall 2025 intake for the society's clubs and management.",
           "link": "https://www.instagram.com/comsatssportssociety/"
         }
-      ]
+      ],
+      "resultBadge": "FT"
     },
     "council": {
       "kicker": "Council SP26",
@@ -235,68 +262,70 @@
       "text": "The students who plan, book, referee and run every event.",
       "members": [
         {
-          "name": "Faculty Advisor",
-          "shirt": "ADVISOR",
-          "number": "1",
-          "role": "Faculty Advisor",
-          "photo": ""
-        },
-        {
-          "name": "Member Name",
+          "name": "Wasi Mohammad",
           "shirt": "SURNAME",
-          "number": "10",
+          "number": "",
           "role": "President",
-          "photo": ""
+          "photo": "assets/council/01-wasi-mohammad.jpg"
         },
         {
-          "name": "Member Name",
+          "name": "Aamir Saeed",
+          "shirt": "ADVISOR",
+          "number": "",
+          "role": "Faculty Advisor",
+          "photo": "assets/council/02-aamir-saeed.webp"
+        },
+        {
+          "name": "Ibad Ahmed",
           "shirt": "SURNAME",
-          "number": "7",
+          "number": "",
           "role": "Vice President",
-          "photo": ""
+          "photo": "assets/council/03-ibad-ahmed.jpg"
         },
         {
-          "name": "Member Name",
+          "name": "Mudassar Shabbir",
           "shirt": "SURNAME",
-          "number": "4",
+          "number": "",
           "role": "General Secretary",
-          "photo": ""
+          "photo": "assets/council/04-mudassar-shabbir.jpg"
         },
         {
-          "name": "Member Name",
+          "name": "Muhammad Huzaifa",
           "shirt": "SURNAME",
-          "number": "9",
-          "role": "Head of Sports",
-          "photo": ""
+          "number": "",
+          "role": "General Manager",
+          "photo": "assets/council/05-muhammad-huzaifa.jpg"
         },
         {
-          "name": "Member Name",
+          "name": "Muhammad Huzaifa",
           "shirt": "SURNAME",
-          "number": "8",
-          "role": "Events Lead",
-          "photo": ""
+          "number": "",
+          "role": "Sports Director",
+          "photo": "assets/council/06-muhammad-huzaifa.jpg"
         },
         {
-          "name": "Member Name",
+          "name": "Wafeya Hashmi",
           "shirt": "SURNAME",
-          "number": "11",
-          "role": "Media Lead",
-          "photo": ""
+          "number": "",
+          "role": "GIRLS HEAD",
+          "photo": "assets/council/07-wafeya-hashmi.jpg"
         },
         {
-          "name": "Member Name",
+          "name": "Hoor E Ain",
           "shirt": "SURNAME",
-          "number": "5",
-          "role": "Finance Lead",
-          "photo": ""
+          "number": "",
+          "role": "Girls Mentor",
+          "photo": "assets/council/08-hoor-e-ain.jpg"
         }
-      ]
+      ],
+      "topRow": 3
     },
     "clubsTeaser": {
       "kicker": "Clubs",
       "title": "Five clubs.\nOne matchday.",
       "text": "Every event needs people who never step on the pitch. Find the crew that fits you.",
-      "cta": "Explore the clubs"
+      "cta": "Explore the clubs",
+      "link": "clubs.html"
     },
     "gallery": {
       "kicker": "Gallery",
@@ -324,13 +353,26 @@
           "src": "",
           "caption": "Recruitment '25"
         }
-      ]
+      ],
+      "link": "https://www.instagram.com/comsatssportssociety/"
     },
     "join": {
       "title": "Pull on\nthe shirt.",
       "text": "Recruitment is open for all five clubs. Fill in the form, pick your clubs, and we'll contact you about the interview.",
       "primaryCta": "Apply now",
-      "secondaryCta": "See the clubs"
+      "secondaryCta": "See the clubs",
+      "primaryLink": "recruitment.html",
+      "secondaryLink": "clubs.html"
+    },
+    "sections": {
+      "strip": true,
+      "society": true,
+      "sports": true,
+      "fixtures": true,
+      "council": true,
+      "clubsTeaser": true,
+      "gallery": true,
+      "join": true
     }
   },
   "clubsPage": {
@@ -344,7 +386,9 @@
     "applyLabel": "Apply to",
     "joinTitle": "Find your\nposition.",
     "joinText": "Choose a preferred club and a second choice on the form. We'll contact you about the interview.",
-    "joinCta": "Apply now"
+    "joinCta": "Apply now",
+    "countLabel": "Club {n} of {total}",
+    "ctaLink": "recruitment.html"
   },
   "clubs": [
     {
@@ -471,7 +515,7 @@
         "text": "Successful applicants are added to their club."
       }
     ],
-    "help": "Questions? DM us on",
+    "help": "Questions? DM us on Instagram or Facebook.",
     "form": {
       "title": "Application form",
       "requiredNote": "All fields are required",
@@ -491,7 +535,15 @@
       "why": "Why do you want to join CSS?",
       "whyHint": "At least 30 characters.",
       "submit": "Submit application",
-      "semesters": 8
+      "semesters": 8,
+      "namePlaceholder": "",
+      "contactPlaceholder": "03XX XXXXXXX",
+      "emailPlaceholder": "you@example.com",
+      "regPlaceholder": "FA23-BCS-045",
+      "selectDepartment": "Select department",
+      "selectSemester": "Select semester",
+      "selectClub": "Select a club",
+      "submitting": "Submitting…"
     },
     "departments": [
       "Computer Science",
@@ -508,6 +560,68 @@
     "successKicker": "Application submitted",
     "successTitle": "Welcome to the trials, {first}.",
     "successText": "We've received your application for {club} (second choice: {second}). The council will contact you on {contact} or {email} about your interview.",
-    "sheetUrl": ""
+    "sheetUrl": "",
+    "closedCta": "Follow on Instagram",
+    "closedLink": "https://www.instagram.com/comsatssportssociety/",
+    "helpLinkText": "Message us",
+    "helpLink": "https://www.instagram.com/comsatssportssociety/",
+    "messages": {
+      "name": "Enter your full name.",
+      "contact": "Enter an 11-digit mobile number, like 0312 3456789.",
+      "email": "Enter a valid email address.",
+      "regNo": "Use the format FA23-BCS-045.",
+      "department": "Select your department.",
+      "semester": "Select your semester.",
+      "preferredClub": "Select your preferred club.",
+      "secondaryClub": "Select a secondary club.",
+      "secondarySame": "Pick a different club from your preferred one.",
+      "why": "Tell us a bit more ({count}/30 characters).",
+      "fixOne": "Fix the highlighted field to submit.",
+      "fixMany": "Fix the {count} highlighted fields to submit.",
+      "notConnected": "The form isn't connected to the society's Google Sheet yet, so nothing was sent.",
+      "duplicate": "An application with registration number {regNo} has already been submitted. DM us on Instagram if you need to change it.",
+      "failed": "Your application didn't go through. Check your connection and submit again."
+    },
+    "successHome": "Back to home",
+    "successClubs": "Read about the clubs"
+  },
+  "footer": {
+    "mark": "Sports Society",
+    "copyright": "COMSATS Sports Society. One team, one dream.",
+    "showAddress": true,
+    "showSocials": true,
+    "links": [
+      {
+        "label": "The Society",
+        "link": "index.html#club"
+      },
+      {
+        "label": "Sports",
+        "link": "index.html#sports"
+      },
+      {
+        "label": "Fixtures",
+        "link": "index.html#fixtures"
+      },
+      {
+        "label": "Clubs",
+        "link": "clubs.html"
+      },
+      {
+        "label": "Recruitment",
+        "link": "recruitment.html"
+      }
+    ],
+    "credit": {
+      "show": true,
+      "text": "Powered by",
+      "linkText": "Nexolv.Tech",
+      "url": "https://nexolv.tech/?i=1"
+    }
+  },
+  "ui": {
+    "skip": "Skip to content",
+    "menu": "Menu",
+    "closePhoto": "Close ✕"
   }
 }

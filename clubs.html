@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Big+Shoulders+Display:wght@700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=7" />
 </head>
 <body>
   <!-- ========== INTRO LOADER ========== -->
@@ -44,15 +44,12 @@
   </div>
   <div class="wipe" id="wipe" aria-hidden="true"></div>
 
-  <a href="#main" class="skip">Skip to content</a>
+  <a href="#main" class="skip" data-c="ui.skip">Skip to content</a>
 
   <div class="topbar" data-c-show="topbar.show">
     <div class="wrap topbar-inner">
       <p><span class="dot" aria-hidden="true"></span><span data-c="topbar.text">Recruitment open.</span> <a href="recruitment.html" data-c-href="topbar.link" class="topbar-link" data-c="topbar.linkText">Apply online →</a></p>
-      <div class="topbar-social">
-        <a href="https://www.instagram.com/comsatssportssociety/" data-c-href="social.instagram" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.facebook.com/comsatssportssociety" data-c-href="social.facebook" target="_blank" rel="noopener">Facebook</a>
-      </div>
+      <div class="topbar-social" data-socials><a href="https://www.instagram.com/comsatssportssociety/" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/comsatssportssociety" target="_blank" rel="noopener">Facebook</a></div>
     </div>
   </div>
 
@@ -62,15 +59,8 @@
         <img src="assets/logo.png" data-c-src="site.logo" alt="" width="44" height="44" />
         <span class="crest-text"><b data-c="site.crestTop">COMSATS</b> <span data-c="site.crestBottom">Sports Society</span></span>
       </a>
-      <nav class="nav-links" id="navLinks" aria-label="Main">
-        <a href="index.html#club" data-c="nav.society">The Society</a>
-        <a href="index.html#sports" data-c="nav.sports">Sports</a>
-        <a href="index.html#fixtures" data-c="nav.fixtures">Fixtures</a>
-        <a href="index.html#squad" data-c="nav.council">Council</a>
-        <a href="clubs.html" data-page-link="clubs" data-c="nav.clubs">Clubs</a>
-        <a href="recruitment.html" class="btn btn-ink nav-cta" data-page-link="recruitment" data-c="nav.cta">Join us</a>
-      </nav>
-      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+      <nav class="nav-links" id="navLinks" aria-label="Main"><a href="index.html#club">The Society</a><a href="index.html#sports">Sports</a><a href="index.html#fixtures">Fixtures</a><a href="index.html#squad">Council</a><a href="clubs.html">Clubs</a><a href="recruitment.html" class="btn btn-ink nav-cta">Join us</a></nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" data-c-aria="ui.menu" aria-expanded="false" aria-controls="navLinks">
         <span></span><span></span>
       </button>
     </div>
@@ -84,7 +74,7 @@
         <h1 class="page-title"><span class="line"><span data-c="clubsPage.line1">Five clubs.</span></span><span class="line line-accent"><span data-c="clubsPage.line2">One matchday.</span></span></h1>
         <div class="page-intro">
           <p data-c="clubsPage.intro">Every tournament needs people who never step on the pitch. Cameras, posters, brackets, stages and ceremonies: our five clubs make matchday happen. Pick the one that fits you.</p>
-          <a href="recruitment.html" class="btn btn-sky"><span data-c="clubsPage.cta">Apply to a club</span> <span aria-hidden="true">→</span></a>
+          <a href="recruitment.html" data-c-href="clubsPage.ctaLink" class="btn btn-sky"><span data-c="clubsPage.cta">Apply to a club</span> <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
@@ -103,7 +93,7 @@
         <div class="join-body">
           <p data-c="clubsPage.joinText">Choose a preferred club and a second choice on the form. We&#x27;ll contact you about the interview.</p>
           <div class="join-actions">
-            <a href="recruitment.html" class="btn btn-ink"><span data-c="clubsPage.joinCta">Apply now</span> <span aria-hidden="true">→</span></a>
+            <a href="recruitment.html" data-c-href="clubsPage.ctaLink" class="btn btn-ink"><span data-c="clubsPage.joinCta">Apply now</span> <span aria-hidden="true">→</span></a>
           </div>
         </div>
       </div>
@@ -115,27 +105,21 @@
       <div class="footer-top">
         <div class="footer-crest">
           <img src="assets/logo.png" data-c-src="site.logo" alt="" width="64" height="64" />
-          <p><b data-c="site.name">COMSATS Sports Society</b><br /><span data-c="site.university">COMSATS University Islamabad</span>, <span data-c="site.campus">Wah Campus</span><br /><span data-c="site.address">G.T. Road, Wah Cantt</span></p>
+          <p><b data-c="site.name">COMSATS Sports Society</b><span class="footer-address" data-c-show="footer.showAddress"><br /><span data-c="site.university">COMSATS University Islamabad</span>, <span data-c="site.campus">Wah Campus</span><br /><span data-c="site.address">G.T. Road, Wah Cantt</span></span></p>
         </div>
-        <nav class="footer-nav" aria-label="Footer">
-          <a href="index.html#club" data-c="nav.society">The Society</a>
-          <a href="index.html#sports" data-c="nav.sports">Sports</a>
-          <a href="index.html#fixtures" data-c="nav.fixtures">Fixtures</a>
-          <a href="clubs.html" data-c="nav.clubs">Clubs</a>
-          <a href="recruitment.html" data-c="nav.recruitment">Recruitment</a>
-        </nav>
-        <div class="footer-nav">
-          <a href="https://www.instagram.com/comsatssportssociety/" data-c-href="social.instagram" target="_blank" rel="noopener">Instagram</a>
-          <a href="https://www.facebook.com/comsatssportssociety" data-c-href="social.facebook" target="_blank" rel="noopener">Facebook</a>
-        </div>
+        <nav class="footer-nav" id="footerLinks" aria-label="Footer"><a href="index.html#club">The Society</a><a href="index.html#sports">Sports</a><a href="index.html#fixtures">Fixtures</a><a href="clubs.html">Clubs</a><a href="recruitment.html">Recruitment</a></nav>
+        <div class="footer-nav" data-socials data-c-show="footer.showSocials"><a href="https://www.instagram.com/comsatssportssociety/" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/comsatssportssociety" target="_blank" rel="noopener">Facebook</a></div>
       </div>
-      <p class="footer-legal">© <span id="year"></span> <span data-c="site.copyright">COMSATS Sports Society. One team, one dream.</span></p>
+      <div class="footer-legal">
+        <p>© <span id="year"></span> <span data-c="footer.copyright">COMSATS Sports Society. One team, one dream.</span></p>
+        <p class="credit" data-c-show="footer.credit.show"><span data-c="footer.credit.text">Powered by</span> <a href="https://nexolv.tech/?i=1" data-c-href="footer.credit.url" target="_blank" rel="noopener" data-c="footer.credit.linkText">Nexolv.Tech</a></p>
+      </div>
     </div>
-    <p class="footer-mark" aria-hidden="true" data-c="site.footerMark">Sports Society</p>
+    <p class="footer-mark" aria-hidden="true" data-c="footer.mark">Sports Society</p>
   </footer>
 
-  <script src="content.js?v=6"></script>
-  <script src="site.js?v=6"></script>
-  <script src="clubs.js?v=6"></script>
+  <script src="content.js?v=7"></script>
+  <script src="site.js?v=7"></script>
+  <script src="clubs.js?v=7"></script>
 </body>
 </html>

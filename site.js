@@ -213,9 +213,6 @@ function setupNav() {
   const toggle = $("#navToggle");
   const links = $("#navLinks");
   const progress = $("#progress");
-  const page = root.dataset.page;
-
-  $$("[data-page-link]", links).forEach((a) => a.classList.toggle("is-current", a.dataset.pageLink === page));
 
   const setOpen = (open) => {
     links.classList.toggle("open", open);
@@ -232,17 +229,46 @@ function setupNav() {
   };
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+}
 
-  // highlight in-page sections (home only)
-  if (page === "home") {
-    const anchors = $$("a:not([data-page-link])", links).filter((a) => a.hash);
-    const spy = new IntersectionObserver(
+/* ---------- Menu, footer and social links from the admin ---------- */
+const isExternalUrl = (url) => /^https?:/i.test(url);
+const anchor = (label, url, cls = "") =>
+  `<a href="${esc(Content.safeUrl(url))}"${cls ? ` class="${cls}"` : ""}${isExternalUrl(url) ? ' target="_blank" rel="noopener"' : ""}>${esc(label)}</a>`;
+
+let navSpy = null;
+function renderChrome(C) {
+  const pageFile = location.pathname.split("/").pop() || "index.html";
+  const nav = C.nav || {};
+  $("#navLinks").innerHTML =
+    (nav.links || []).map((l) => anchor(l.label, l.link)).join("") +
+    (nav.cta ? anchor(nav.cta, nav.ctaLink || "recruitment.html", "btn btn-ink nav-cta") : "");
+
+  const socials = (C.social?.links || []).filter((l) => l.url).map((l) => anchor(l.label, l.url)).join("");
+  $$("[data-socials]").forEach((el) => { el.innerHTML = socials; });
+  const fl = $("#footerLinks");
+  if (fl) fl.innerHTML = (C.footer?.links || []).map((l) => anchor(l.label, l.link)).join("");
+
+  // highlight the current page, and on the home page the section in view
+  const navAnchors = $$("#navLinks a");
+  navAnchors.forEach((a) => {
+    const url = new URL(a.href, location.href);
+    const file = url.pathname.split("/").pop() || "index.html";
+    a.classList.toggle("is-current", url.origin === location.origin && file === pageFile && !url.hash && file !== "index.html");
+  });
+  navSpy?.disconnect();
+  const hashLinks = navAnchors.filter((a) => {
+    const url = new URL(a.href, location.href);
+    return url.hash && (url.pathname.split("/").pop() || "index.html") === pageFile;
+  });
+  if (hashLinks.length) {
+    navSpy = new IntersectionObserver(
       (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) anchors.forEach((a) => a.classList.toggle("is-current", a.hash === `#${e.target.id}`));
+        if (e.isIntersecting) hashLinks.forEach((a) => a.classList.toggle("is-current", a.hash === `#${e.target.id}`));
       }),
       { rootMargin: "-40% 0px -55% 0px" }
     );
-    anchors.forEach((a) => { const s = document.getElementById(a.hash.slice(1)); if (s) spy.observe(s); });
+    hashLinks.forEach((a) => { const sec = document.getElementById(a.hash.slice(1)); if (sec) navSpy.observe(sec); });
   }
 }
 
@@ -274,6 +300,7 @@ function initSite() {
   runIntro();
   setupWipe();
   setupNav();
+  Content.onReady(renderChrome);
   const y = $("#year");
   if (y) y.textContent = new Date().getFullYear();
 }
