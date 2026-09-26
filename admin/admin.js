@@ -594,7 +594,73 @@
   });
 
   /* ---------- tools ---------- */
+  /* find & replace across all text (never links, images, ids, dates) */
+  const SKIP_KEY = /(link|url|href|image|src|photo|logo|endpoint|^id$|icon|status|date|time|frequency)/i;
+  const LOOKS_URL = /^(https?:|\/|#|mailto:|tel:)|\.html\b/i;
+  const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  function findMatches(find, replace, { keepCase, wholeWord }) {
+    const re = new RegExp(wholeWord ? `\\b${escRe(find)}\\b` : escRe(find), keepCase ? "gi" : "g");
+    const swap = (m) => {
+      if (!keepCase) return replace;
+      if (m === m.toUpperCase() && m !== m.toLowerCase()) return replace.toUpperCase();
+      if (m[0] === m[0].toUpperCase()) return replace.charAt(0).toUpperCase() + replace.slice(1);
+      return replace.toLowerCase();
+    };
+    const hits = [];
+    const walk = (obj, path) => {
+      Object.entries(obj).forEach(([k, v]) => {
+        const p = path ? `${path}.${k}` : k;
+        if (typeof v === "string") {
+          if ((!Array.isArray(obj) && SKIP_KEY.test(k)) || LOOKS_URL.test(v)) return;
+          re.lastIndex = 0;
+          if (re.test(v)) { re.lastIndex = 0; hits.push({ obj, k, path: p, before: v, after: v.replace(re, swap) }); }
+        } else if (v && typeof v === "object") walk(v, p);
+      });
+    };
+    walk(state.draft, "");
+    return hits;
+  }
+
   const TOOLS = {
+    replace(ed) {
+      const card = h(`<div class="tool-card">
+          <div class="fields" style="border:0;padding:0">
+            <div class="f f-half"><label for="frFind">Find</label><input type="text" id="frFind" placeholder="club" /></div>
+            <div class="f f-half"><label for="frRep">Replace with</label><input type="text" id="frRep" placeholder="team" /></div>
+            <div class="f"><label class="toggle"><input type="checkbox" id="frCase" checked /><span class="track"></span>Keep capitals (club → team, Club → Team, CLUB → TEAM)</label></div>
+            <div class="f"><label class="toggle"><input type="checkbox" id="frWord" /><span class="track"></span>Whole words only</label></div>
+          </div>
+          <div class="tool-row" style="margin:18px 0 8px">
+            <button type="button" class="btn btn-line" id="frPreview">Preview changes</button>
+            <button type="button" class="btn btn-sky" id="frApply" disabled>Replace all</button>
+          </div>
+          <p class="help" id="frCount"></p>
+          <ul class="history" id="frList"></ul>
+        </div>`);
+      ed.append(card);
+      let hits = [];
+      const opts = () => ({ keepCase: $("#frCase").checked, wholeWord: $("#frWord").checked });
+      const preview = () => {
+        const find = $("#frFind").value;
+        if (!find.trim()) { $("#frCount").textContent = "Type a word to find."; return; }
+        hits = findMatches(find, $("#frRep").value, opts());
+        $("#frCount").textContent = hits.length ? `${hits.length} place${hits.length === 1 ? "" : "s"} will change:` : "No matches.";
+        $("#frApply").disabled = !hits.length;
+        $("#frList").innerHTML = hits.slice(0, 200).map((x) => `<li><div><div class="meta">${esc(x.path)}</div><div>${esc(x.before)}</div><div class="when" style="color:var(--sky-deep)">→ ${esc(x.after)}</div></div></li>`).join("");
+      };
+      $("#frPreview").addEventListener("click", preview);
+      [$("#frFind"), $("#frRep")].forEach((i) => i.addEventListener("keydown", (e) => e.key === "Enter" && preview()));
+      $("#frApply").addEventListener("click", () => {
+        hits = findMatches($("#frFind").value, $("#frRep").value, opts());
+        hits.forEach((x) => { x.obj[x.k] = x.after; });
+        changed();
+        toast(`Replaced in ${hits.length} place${hits.length === 1 ? "" : "s"}. Check the preview, then Publish.`, "ok");
+        $("#frApply").disabled = true;
+        $("#frCount").textContent = "Done. Nothing is live until you click Publish.";
+        $("#frList").innerHTML = "";
+      });
+    },
+
     media(ed) {
       const card = h(`<div class="tool-card">
           <div class="tool-row" style="margin-bottom:18px"><label class="btn btn-sky">Upload image<input type="file" accept="image/*" hidden /></label></div>

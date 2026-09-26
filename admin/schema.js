@@ -119,7 +119,7 @@ const SCHEMA = [
         ["page", "Show again on every page"], ["session", "Show again next visit"], ["day", "Show again after a day"], ["once", "Never show again"],
       ] },
       { key: "popup.showOnHome", label: "Show on the home page", type: "toggle" },
-      { key: "popup.showOnClubs", label: "Show on the clubs page", type: "toggle" },
+      { key: "popup.showOnClubs", label: "Show on the teams page", type: "toggle" },
       { key: "popup.showOnRecruitment", label: "Show on the recruitment page", type: "toggle" },
       { key: "popup.closeLabel", label: "Close button name", type: "text", help: "Read out by screen readers." },
     ],
@@ -154,8 +154,8 @@ const SCHEMA = [
       { key: "seo.shareImage", label: "Share image", type: "image" },
       { key: "seo.homeTitle", label: "Home page title", type: "text" },
       { key: "seo.homeDescription", label: "Home page description", type: "textarea" },
-      { key: "seo.clubsTitle", label: "Clubs page title", type: "text" },
-      { key: "seo.clubsDescription", label: "Clubs page description", type: "textarea" },
+      { key: "seo.clubsTitle", label: "Teams page title", type: "text" },
+      { key: "seo.clubsDescription", label: "Teams page description", type: "textarea" },
       { key: "seo.recruitmentTitle", label: "Recruitment page title", type: "text" },
       { key: "seo.recruitmentDescription", label: "Recruitment page description", type: "textarea" },
     ],
@@ -171,7 +171,7 @@ const SCHEMA = [
       { key: "home.sections.sports", label: "Sports", type: "toggle" },
       { key: "home.sections.fixtures", label: "Fixtures & results", type: "toggle" },
       { key: "home.sections.council", label: "Council", type: "toggle" },
-      { key: "home.sections.clubsTeaser", label: "Clubs section", type: "toggle" },
+      { key: "home.sections.clubsTeaser", label: "Teams section", type: "toggle" },
       { key: "home.sections.gallery", label: "Gallery", type: "toggle" },
       { key: "home.sections.join", label: "Join banner", type: "toggle" },
     ],
@@ -289,8 +289,8 @@ const SCHEMA = [
     ],
   },
   {
-    group: "Home page", id: "clubsTeaser", title: "Clubs section", page: "index.html", anchor: "#clubs",
-    intro: "The dark scoreboard section on the home page. The clubs themselves are edited under Clubs page → Clubs.",
+    group: "Home page", id: "clubsTeaser", title: "Teams section", page: "index.html", anchor: "#clubs",
+    intro: "The dark scoreboard section on the home page. The teams themselves are edited under Teams page → Teams.",
     fields: [
       { key: "home.clubsTeaser.kicker", label: "Small label", type: "text" },
       { key: "home.clubsTeaser.title", label: "Heading", type: "textarea", rows: 2 },
@@ -329,14 +329,14 @@ const SCHEMA = [
 
   /* ================= CLUBS PAGE ================= */
   {
-    group: "Clubs page", id: "clubsList", title: "Clubs", page: "clubs.html", anchor: "#main",
-    intro: "These clubs also fill the home page scoreboard and the recruitment form's club dropdowns.",
+    group: "Teams page", id: "clubsList", title: "Teams", page: "clubs.html", anchor: "#main",
+    intro: "These teams also fill the home page scoreboard and the recruitment form's team dropdowns.",
     fields: [
       {
-        key: "clubs", label: "Clubs", type: "list", itemLabel: "club", titleKey: "name", subtitleKey: "code",
+        key: "clubs", label: "Teams", type: "list", itemLabel: "team", titleKey: "name", subtitleKey: "code",
         item: { id: "new-club", code: "NEW", name: "New Club", image: "", tagline: "", description: "", does: [], fit: [] },
         fields: [
-          { key: "name", label: "Club name", type: "text" },
+          { key: "name", label: "Team name", type: "text" },
           { key: "code", label: "Scoreboard code", type: "text", half: true, help: "3 letters, e.g. MED" },
           { key: "id", label: "Link id", type: "text", half: true, help: "Lowercase, no spaces (clubs.html#media)" },
           { key: "tagline", label: "Tagline", type: "text" },
@@ -349,7 +349,7 @@ const SCHEMA = [
     ],
   },
   {
-    group: "Clubs page", id: "clubsPage", title: "Page text", page: "clubs.html", anchor: "#main",
+    group: "Teams page", id: "clubsPage", title: "Page text", page: "clubs.html", anchor: "#main",
     fields: [
       { key: "clubsPage.kicker", label: "Small label", type: "text" },
       { key: "clubsPage.line1", label: "Headline, line 1", type: "text" },
@@ -357,10 +357,10 @@ const SCHEMA = [
       { key: "clubsPage.intro", label: "Intro paragraph", type: "textarea" },
       { key: "clubsPage.cta", label: "Button text", type: "text", half: true },
       { key: "clubsPage.ctaLink", label: "Button link (top and bottom)", type: "url", half: true },
-      { key: "clubsPage.countLabel", label: "Club counter", type: "text", help: "Use {n} and {total}, e.g. Club {n} of {total}" },
+      { key: "clubsPage.countLabel", label: "Team counter", type: "text", help: "Use {n} and {total}, e.g. Team {n} of {total}" },
       { key: "clubsPage.doesLabel", label: "“What you'll do” label", type: "text" },
       { key: "clubsPage.fitLabel", label: "“Good fit” label", type: "text" },
-      { key: "clubsPage.applyLabel", label: "Apply button prefix", type: "text", help: "Shown as “Apply to Media Club”." },
+      { key: "clubsPage.applyLabel", label: "Apply button prefix", type: "text", help: "Shown as “Apply to Media Team”." },
       { key: "clubsPage.joinTitle", label: "Bottom banner heading", type: "textarea", rows: 2 },
       { key: "clubsPage.joinText", label: "Bottom banner paragraph", type: "textarea" },
       { key: "clubsPage.joinCta", label: "Bottom banner button", type: "text" },
@@ -417,8 +417,8 @@ const SCHEMA = [
       { key: "recruitment.form.regHint", label: "Registration no. hint", type: "text" },
       { key: "recruitment.form.department", label: "Department label", type: "text", half: true },
       { key: "recruitment.form.semester", label: "Semester label", type: "text", half: true },
-      { key: "recruitment.form.preferredClub", label: "Preferred club label", type: "text", half: true },
-      { key: "recruitment.form.secondaryClub", label: "Secondary club label", type: "text", half: true },
+      { key: "recruitment.form.preferredClub", label: "Preferred team label", type: "text", half: true },
+      { key: "recruitment.form.secondaryClub", label: "Secondary team label", type: "text", half: true },
       { key: "recruitment.form.why", label: "Question label", type: "text" },
       { key: "recruitment.form.whyHint", label: "Question hint", type: "text" },
       { key: "recruitment.form.submit", label: "Submit button", type: "text", half: true },
@@ -433,7 +433,7 @@ const SCHEMA = [
         { key: "recruitment.form.regPlaceholder", label: "Registration number", type: "text", half: true },
         { key: "recruitment.form.selectDepartment", label: "Department dropdown", type: "text", half: true },
         { key: "recruitment.form.selectSemester", label: "Semester dropdown", type: "text", half: true },
-        { key: "recruitment.form.selectClub", label: "Club dropdowns", type: "text", half: true },
+        { key: "recruitment.form.selectClub", label: "Team dropdowns", type: "text", half: true },
       ],
     }],
   },
@@ -447,9 +447,9 @@ const SCHEMA = [
       { key: "recruitment.messages.regNo", label: "Wrong registration number", type: "text" },
       { key: "recruitment.messages.department", label: "No department", type: "text" },
       { key: "recruitment.messages.semester", label: "No semester", type: "text" },
-      { key: "recruitment.messages.preferredClub", label: "No preferred club", type: "text" },
-      { key: "recruitment.messages.secondaryClub", label: "No secondary club", type: "text" },
-      { key: "recruitment.messages.secondarySame", label: "Same club picked twice", type: "text" },
+      { key: "recruitment.messages.preferredClub", label: "No preferred team", type: "text" },
+      { key: "recruitment.messages.secondaryClub", label: "No secondary team", type: "text" },
+      { key: "recruitment.messages.secondarySame", label: "Same team picked twice", type: "text" },
       { key: "recruitment.messages.why", label: "Answer too short", type: "text" },
       { key: "recruitment.messages.fixOne", label: "One field to fix", type: "text" },
       { key: "recruitment.messages.fixMany", label: "Several fields to fix", type: "text" },
@@ -460,7 +460,7 @@ const SCHEMA = [
   },
   {
     group: "Recruitment", id: "recruitSuccess", title: "Success message", page: "recruitment.html", anchor: "#main",
-    intro: "Shown after someone applies. Use {first}, {name}, {club}, {second}, {contact}, {email} or {regNo} to insert their details.",
+    intro: "Shown after someone applies. Use {first}, {name}, {team}, {second}, {contact}, {email} or {regNo} to insert their details.",
     fields: [
       { key: "recruitment.successKicker", label: "Small label", type: "text" },
       { key: "recruitment.successTitle", label: "Heading", type: "text" },
@@ -471,6 +471,7 @@ const SCHEMA = [
   },
 
   /* ================= TOOLS ================= */
+  { group: "Tools", id: "replace", title: "Find & replace", tool: "replace", intro: "Change a word everywhere on the site at once, e.g. Club → Team. Links and images are never changed. Nothing goes live until you publish." },
   { group: "Tools", id: "media", title: "Media library", tool: "media", intro: "Every image you've uploaded. Delete images you no longer use." },
   { group: "Tools", id: "history", title: "Version history", tool: "history", intro: "Every publish is saved. Load an older version to review it, then publish to restore it." },
   { group: "Tools", id: "backup", title: "Backup", tool: "backup", intro: "Download all content as a file, or restore from one." },

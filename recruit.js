@@ -148,7 +148,7 @@ form.addEventListener("submit", async (e) => {
 });
 
 function fillTemplate(tpl, p) {
-  const vars = { first: p.name.split(/\s+/)[0], name: p.name, club: p.preferredClub, second: p.secondaryClub, contact: p.contact, email: p.email, regNo: p.regNo };
+  const vars = { first: p.name.split(/\s+/)[0], name: p.name, club: p.preferredClub, team: p.preferredClub, second: p.secondaryClub, contact: p.contact, email: p.email, regNo: p.regNo };
   return String(tpl || "").replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
 }
 

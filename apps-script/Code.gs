@@ -10,7 +10,7 @@ const NOTIFY_EMAIL = "";
 
 const HEADERS = [
   "Submitted at", "Name", "Contact number", "Email", "Registration number",
-  "Department", "Semester", "Preferred club", "Secondary club", "Why join CSS",
+  "Department", "Semester", "Preferred team", "Secondary team", "Why join CSS",
 ];
 
 function doPost(e) {
@@ -46,7 +46,7 @@ function doPost(e) {
         NOTIFY_EMAIL,
         `New CSS application: ${d.name} (${d.preferredClub})`,
         `${d.name} · ${regNo} · ${d.department}, semester ${d.semester}\n` +
-        `Preferred: ${d.preferredClub} · Secondary: ${d.secondaryClub}\n` +
+        `Preferred team: ${d.preferredClub} · Secondary: ${d.secondaryClub}\n` +
         `Contact: ${d.contact} · ${d.email}\n\nWhy join CSS:\n${d.why}`
       );
     }
