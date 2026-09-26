@@ -1,7 +1,7 @@
 /* POST /api/upload { name, type, data (base64) } → { url }   (admin only)
    The admin resizes images in the browser first, so uploads stay well under Vercel's 4.5 MB limit. */
 
-import { saveMedia } from "./_lib/store.js";
+import { saveMedia, describe } from "./_lib/store.js";
 import { send, requireAuth, body } from "./_lib/http.js";
 
 const TYPES = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/gif": "gif", "image/avif": "avif" };
@@ -26,6 +26,6 @@ export default async function handler(req, res) {
     return send(res, 200, { ok: true, url: saved.url });
   } catch (err) {
     console.error(err);
-    return send(res, 500, { error: "Upload failed. Check that Vercel Blob is connected to this project." });
+    return send(res, 500, { error: `Upload failed. ${describe(err)}` });
   }
 }

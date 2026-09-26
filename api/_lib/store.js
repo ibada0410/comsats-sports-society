@@ -1,21 +1,51 @@
 /* Storage for site content + uploaded media.
-   On Vercel (BLOB_READ_WRITE_TOKEN set) it uses Vercel Blob; locally it uses the .data/ folder. */
+   On Vercel it uses Vercel Blob (public or private stores both work); locally it uses the .data/ folder. */
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
 const useBlob = !!process.env.BLOB_READ_WRITE_TOKEN;
+const onVercel = !!process.env.VERCEL;
 const LOCAL = path.join(process.cwd(), ".data");
 const KEEP_VERSIONS = 40;
 
+export class StorageError extends Error {}
+
 let blob = null;
 async function sdk() {
+  if (!useBlob && onVercel) {
+    throw new StorageError("Vercel Blob isn't connected: BLOB_READ_WRITE_TOKEN is missing. In Vercel open Storage → your Blob store → Connect Project, tick all environments, then redeploy.");
+  }
   blob ??= await import("@vercel/blob");
   return blob;
 }
 
+/* Public stores give direct links; private stores are read through /api/file.
+   The store type is detected once (or set BLOB_ACCESS=public|private to skip detection). */
+let access = ["public", "private"].includes(process.env.BLOB_ACCESS) ? process.env.BLOB_ACCESS : null;
+async function storeAccess() {
+  if (access) return access;
+  const { put } = await sdk();
+  const probe = { access: "public", contentType: "text/plain", addRandomSuffix: false, allowOverwrite: true };
+  try {
+    await put("system/access-probe.txt", "ok", probe);
+    access = "public";
+  } catch (publicErr) {
+    try {
+      await put("system/access-probe.txt", "ok", { ...probe, access: "private" });
+      access = "private";
+    } catch {
+      throw publicErr;
+    }
+  }
+  return access;
+}
+
+const fileUrl = (pathname) => `/api/file?p=${encodeURIComponent(pathname)}`;
+const viewUrl = (b, acc) => (acc === "private" ? fileUrl(b.pathname) : b.url);
+
 async function listAll(prefix) {
-  if (!useBlob) {
+  if (!useBlob && !onVercel) {
     const dir = path.join(LOCAL, prefix);
     const names = await fs.readdir(dir).catch(() => []);
     return Promise.all(names.map(async (name) => {
@@ -24,43 +54,60 @@ async function listAll(prefix) {
     }));
   }
   const { list } = await sdk();
+  const acc = await storeAccess();
   const out = [];
   let cursor;
   do {
     const page = await list({ prefix, cursor, limit: 1000 });
-    out.push(...page.blobs.map((b) => ({ pathname: b.pathname, url: b.url, size: b.size, uploadedAt: new Date(b.uploadedAt).toISOString() })));
+    out.push(...page.blobs.map((b) => ({ pathname: b.pathname, url: viewUrl(b, acc), size: b.size, uploadedAt: new Date(b.uploadedAt).toISOString() })));
     cursor = page.hasMore ? page.cursor : undefined;
   } while (cursor);
   return out;
 }
 
 async function write(pathname, body, contentType) {
-  if (!useBlob) {
+  if (!useBlob && !onVercel) {
     const file = path.join(LOCAL, pathname);
     await fs.mkdir(path.dirname(file), { recursive: true });
     await fs.writeFile(file, body);
     return { url: `/.data/${pathname}`, pathname };
   }
   const { put } = await sdk();
-  const res = await put(pathname, body, { access: "public", contentType, addRandomSuffix: false, cacheControlMaxAge: 31536000 });
-  return { url: res.url, pathname: res.pathname };
+  const acc = await storeAccess();
+  const res = await put(pathname, body, { access: acc, contentType, addRandomSuffix: false, cacheControlMaxAge: 31536000 });
+  return { url: viewUrl(res, acc), pathname: res.pathname };
+}
+
+/* Stream one stored file (used by /api/file for private stores). */
+export async function openFile(pathname) {
+  if (!useBlob && !onVercel) {
+    const file = path.join(LOCAL, pathname);
+    if (!file.startsWith(LOCAL)) return null;
+    const data = await fs.readFile(file).catch(() => null);
+    return data && { body: data, contentType: null };
+  }
+  const { get } = await sdk();
+  const res = await get(pathname, { access: await storeAccess() });
+  if (!res || res.statusCode !== 200) return null;
+  return { stream: res.stream, contentType: res.blob.contentType };
 }
 
 async function readText(item) {
-  if (!useBlob) return fs.readFile(path.join(LOCAL, item.pathname), "utf8");
-  const res = await fetch(item.url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`Blob read failed: ${res.status}`);
-  return res.text();
+  if (!useBlob && !onVercel) return fs.readFile(path.join(LOCAL, item.pathname), "utf8");
+  const { get } = await sdk();
+  const res = await get(item.pathname, { access: await storeAccess(), useCache: false });
+  if (!res || res.statusCode !== 200) throw new StorageError(`Couldn't read ${item.pathname}`);
+  return new Response(res.stream).text();
 }
 
 async function remove(items) {
   if (!items.length) return;
-  if (!useBlob) {
+  if (!useBlob && !onVercel) {
     await Promise.all(items.map((i) => fs.unlink(path.join(LOCAL, i.pathname)).catch(() => {})));
     return;
   }
   const { del } = await sdk();
-  await del(items.map((i) => i.url));
+  await del(items.map((i) => i.pathname));
 }
 
 /* ---------- content versions: content/<timestamp>.json (newest = live) ---------- */
@@ -106,4 +153,25 @@ export async function deleteMedia(url) {
   return true;
 }
 
-export const storageMode = useBlob ? "vercel-blob" : "local";
+/* ---------- health check for the admin ---------- */
+export async function storageStatus() {
+  if (!useBlob && !onVercel) return { ok: true, mode: "local" };
+  try {
+    const acc = await storeAccess();
+    await listAll("content/");
+    return { ok: true, mode: "vercel-blob", access: acc };
+  } catch (err) {
+    return { ok: false, mode: useBlob ? "vercel-blob" : "missing", error: describe(err) };
+  }
+}
+
+export function describe(err) {
+  if (err instanceof StorageError) return err.message;
+  const m = String(err?.message || err);
+  if (/access denied|valid token/i.test(m)) return "Vercel Blob rejected the token. Reconnect the Blob store to this project (Storage tab) and redeploy.";
+  if (/store.*(not.*found|does not exist)|BlobStoreNotFound/i.test(m)) return "The Blob store connected to this project no longer exists. Create or reconnect one in the Storage tab and redeploy.";
+  if (/suspended/i.test(m)) return "The Blob store is suspended (usually the free-plan limit). Check Vercel → Storage.";
+  return `Storage error: ${m}`;
+}
+
+export const storageMode = useBlob ? "vercel-blob" : onVercel ? "missing" : "local";

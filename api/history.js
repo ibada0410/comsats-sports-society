@@ -1,7 +1,7 @@
 /* GET /api/history        → list of published versions (admin only)
    GET /api/history?id=…   → one version's content (admin only) */
 
-import { listVersions, readVersion } from "./_lib/store.js";
+import { listVersions, readVersion, describe } from "./_lib/store.js";
 import { send, requireAuth } from "./_lib/http.js";
 
 export default async function handler(req, res) {
@@ -17,6 +17,6 @@ export default async function handler(req, res) {
     return send(res, 200, { items: versions.map(({ id, savedAt, size }) => ({ id, savedAt, size })) });
   } catch (err) {
     console.error(err);
-    return send(res, 500, { error: "Storage error." });
+    return send(res, 500, { error: describe(err) });
   }
 }

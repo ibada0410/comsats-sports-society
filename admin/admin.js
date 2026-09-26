@@ -142,6 +142,17 @@
     if (restored) showBanner("You have unpublished changes from your last session. They're restored below.", [
       { label: "Discard them", cls: "btn-line", run: discardChanges },
     ]);
+    checkStorage();
+  }
+
+  // warn straight away if publishing can't work (storage not connected, bad token…)
+  async function checkStorage() {
+    try {
+      const st = await api("/api/status");
+      if (!st.ok) showBanner(`Publishing and uploads won't work yet. ${st.error}`, [
+        { label: "Check again", cls: "btn-line", run: () => { hideBanner(); checkStorage(); } },
+      ]);
+    } catch (e) {}
   }
 
   (async function init() {

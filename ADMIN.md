@@ -12,7 +12,9 @@ The website is plain HTML/CSS/JS. All its text, images, links, colours and lists
 ## 2. Turn on storage (one time)
 
 1. In your Vercel project → **Storage** tab → **Create Database** → **Blob** → create it.
-2. Connect it to this project (all environments). Vercel adds `BLOB_READ_WRITE_TOKEN` automatically.
+2. Connect it to this project and tick **all environments** (Production, Preview, Development). Vercel adds `BLOB_READ_WRITE_TOKEN` automatically.
+   Public or private store both work.
+3. **Redeploy** (Deployments → latest → ⋯ → Redeploy). The token only reaches the site after a new deployment.
 
 ## 3. Set the admin password (one time)
 
@@ -60,3 +62,16 @@ Open http://localhost:3000 (site) and http://localhost:3000/admin/ (password: `a
 | `admin/` | The admin panel. `schema.js` lists every editable field. |
 | `api/` | Vercel functions: `login`, `content` (read/publish), `upload`, `media`, `history`. |
 | `dev-server.mjs` | Local test server only. Not used on Vercel. |
+
+## Troubleshooting
+
+The admin checks storage when you log in and shows a yellow banner if publishing can't work. Common messages:
+
+| Message | Fix |
+| --- | --- |
+| *BLOB_READ_WRITE_TOKEN is missing* | Storage → your Blob store → **Connect Project** → tick all environments → then **Redeploy**. |
+| *The Blob store … no longer exists* / *rejected the token* | The store was deleted or reconnected. Reconnect it to the project, then **Redeploy**. |
+| *Blob store is suspended* | You've hit the free-plan limit. Check Vercel → Storage for usage. |
+| *ADMIN_PASSWORD isn't set* | Settings → Environment Variables → add `ADMIN_PASSWORD` → **Redeploy**. |
+
+Environment variable changes never apply to an existing deployment: always redeploy after changing them.

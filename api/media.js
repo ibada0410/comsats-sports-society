@@ -1,7 +1,7 @@
 /* GET    /api/media        → uploaded images (admin only)
    DELETE /api/media?url=…  → delete one image (admin only) */
 
-import { listMedia, deleteMedia } from "./_lib/store.js";
+import { listMedia, deleteMedia, describe } from "./_lib/store.js";
 import { send, requireAuth } from "./_lib/http.js";
 
 export default async function handler(req, res) {
@@ -17,6 +17,6 @@ export default async function handler(req, res) {
     return send(res, 405, { error: "Method not allowed" });
   } catch (err) {
     console.error(err);
-    return send(res, 500, { error: "Storage error." });
+    return send(res, 500, { error: describe(err) });
   }
 }
