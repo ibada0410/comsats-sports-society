@@ -34,9 +34,11 @@ let countdownTimer = null;
 function renderNextUp(C) {
   const box = $("#nextUp");
   const t = C.home.nextUp;
-  const next = C.home.fixtures.items
-    .filter((e) => e.status === "upcoming" && eventTime(e) > Date.now())
-    .sort((a, b) => eventTime(a) - eventTime(b))[0];
+  // a fixture starred in the admin ("Show in Next Up") wins while its date is still ahead;
+  // otherwise the soonest upcoming fixture is shown
+  const future = C.home.fixtures.items.filter((e) => e.date && eventTime(e) > Date.now());
+  const next = future.find((e) => e.featured) ||
+    future.filter((e) => e.status === "upcoming").sort((a, b) => eventTime(a) - eventTime(b))[0];
   clearInterval(countdownTimer);
 
   if (!next) {

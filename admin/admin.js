@@ -268,10 +268,17 @@
   });
 
   /* ---------- editor ---------- */
-  function openSection(id) {
+  // re-render the current section without closing the list items that are open
+  function redrawSection() {
+    const scroll = $("#editor").scrollTop;
+    openSection(state.section.id, { keepOpen: true });
+    $("#editor").scrollTop = scroll;
+  }
+
+  function openSection(id, { keepOpen = false } = {}) {
     const sec = SCHEMA.find((s) => s.id === id);
     state.section = sec;
-    state.openItems.clear();
+    if (!keepOpen) state.openItems.clear();
     history.replaceState(null, "", `#${id}`);
     $$(".side-link").forEach((a) => a.classList.toggle("is-active", a.dataset.id === id));
 
@@ -326,7 +333,16 @@
       }
       case "toggle": {
         wrap.innerHTML = `<label class="toggle"><input type="checkbox" id="${id}" ${value ? "checked" : ""} /><span class="track"></span>${esc(f.label)}</label>${help}`;
-        $("input", wrap).addEventListener("change", (e) => set(e.target.checked));
+        $("input", wrap).addEventListener("change", (e) => {
+          // "exclusive": switching this on switches it off on every other item in the same list
+          if (f.exclusive && e.target.checked) {
+            const parts = path.split(".");
+            const siblings = getPath(state.draft, parts.slice(0, -2).join("."));
+            if (Array.isArray(siblings)) siblings.forEach((it) => { if (it && typeof it === "object") it[f.key] = false; });
+          }
+          set(e.target.checked);
+          if (f.exclusive) redrawSection();
+        });
         break;
       }
       case "color": {
@@ -431,7 +447,7 @@
       arr.forEach((item, i) => {
         const key = `${path}.${i}`;
         const open = state.openItems.has(key);
-        const title = () => (f.titleKey && item[f.titleKey]) || `${f.itemLabel || "Item"} ${i + 1}`;
+        const title = () => `${f.starKey && item[f.starKey] ? "⭐ " : ""}${(f.titleKey && item[f.titleKey]) || `${f.itemLabel || "Item"} ${i + 1}`}`;
         const thumbKey = f.fields.find((x) => x.type === "image")?.key;
         const el = h(`
           <div class="item ${open ? "is-open" : ""}">

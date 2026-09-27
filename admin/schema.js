@@ -243,8 +243,10 @@ const SCHEMA = [
       {
         key: "home.fixtures.items", label: "Events", type: "list", itemLabel: "event", titleKey: "title", subtitleKey: "date",
         help: "Set status to “Upcoming” for future events; the nearest one appears in the hero countdown.",
-        item: { title: "New event", tag: "", date: "", time: "", venue: "", status: "upcoming", description: "", link: "", linkText: "" },
+        item: { title: "New event", featured: false, tag: "", date: "", time: "", venue: "", status: "upcoming", description: "", link: "", linkText: "" },
+        starKey: "featured",
         fields: [
+          { key: "featured", label: "⭐ Show in Next Up", type: "toggle", exclusive: true, help: "Shows this fixture in the countdown box on the home page. Only one fixture can have the star. With no star, the soonest upcoming fixture is shown." },
           { key: "title", label: "Title", type: "text" },
           { key: "tag", label: "Tag", type: "text", help: "Small label above the title, e.g. Sports Week" },
           { key: "date", label: "Date", type: "date", half: true },
