@@ -2,7 +2,7 @@
    Each step runs once per piece of content: after it, "schemaVersion" is bumped,
    so later edits made in the admin are never changed again. */
 
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;
 
 const SKIP_KEY = /(link|url|href|image|src|photo|logo|endpoint|^id$|icon|status|date|time|frequency)/i;
 const LOOKS_URL = /^(https?:|\/|#|mailto:|tel:)|\.html\b/i;
@@ -30,6 +30,15 @@ const STEPS = {
   // v2: the society calls its clubs "teams"
   2(content) {
     replaceWord(content, "club", "team");
+  },
+  // v3: the "why join CSS" answer no longer needs a 30-character minimum
+  3(content) {
+    const form = content.recruitment?.form;
+    if (form?.whyHint === "At least 30 characters.") form.whyHint = "";
+    const messages = content.recruitment?.messages;
+    if (messages?.why === "Tell us a bit more ({count}/30 characters).") {
+      messages.why = "Tell us a bit about why you want to join.";
+    }
   },
 };
 

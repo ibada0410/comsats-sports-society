@@ -65,7 +65,7 @@ const rules = {
   semester: (v) => (v ? "" : msg("semester")),
   preferredClub: (v) => (v ? "" : msg("preferredClub")),
   secondaryClub: (v) => (!v ? msg("secondaryClub") : v === $("#preferredClub").value ? msg("secondarySame") : ""),
-  why: (v) => (v.trim().length < 30 ? msg("why", { count: v.trim().length }) : ""),
+  why: (v) => (v.trim().length < 1 ? msg("why") : ""),
 };
 
 function check(name) {
